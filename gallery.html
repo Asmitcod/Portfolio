@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Photo Gallery - Asmit Bisht</title>
+    <link rel="stylesheet" href="gallery.css">
+    <script src="https://kit.fontawesome.com/fa62c117c7.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header center">
+        <h3><a href="in.html" class="link">AB.</a></h3>
+    </header>
+
+    <main>
+        <section class="section gallery">
+            <h2 class="section__title">My Photo Gallery</h2>
+            <p class="section__desc">A collection of moments captured through my lens.</p>
+
+            <div class="gallery__grid">
+                <div class="gallery__item">
+                    <img src="im1.jpg" alt="Photo 1" onclick="openLightbox(this)">
+                </div>
+                <div class="gallery__item">
+                    <img src="im2.jpg" alt="Photo 2" onclick="openLightbox(this)">
+                </div>
+                <div class="gallery__item">
+                    <img src="im3.jpg" alt="Photo 3" onclick="openLightbox(this)">
+                </div>
+                <div class="gallery__item">
+                    <img src="im4.jpg" alt="Photo 4" onclick="openLightbox(this)">
+                </div>
+                <div class="gallery__item">
+                    <img src="im5.jpg" alt="Photo 5" onclick="openLightbox(this)">
+                </div>
+            </div>
+        </section>
+
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox">
+            <span class="close" onclick="closeLightbox()">&times;</span>
+            <img id="lightbox-img">
+        </div>
+    </main>
+
+    <script>
+        function openLightbox(img) {
+            document.getElementById("lightbox").style.display = "flex";
+            document.getElementById("lightbox-img").src = img.src;
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").style.display = "none";
+        }
+    </script>
+
+    <footer class="center">
+        <a href="in.html" class="btn btn--outline">Back to Portfolio</a>
+    </footer>
+</body>
+</html>
