@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Gallery - Asmit Bisht</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+  <header class="top">
+    <a href="index.html" class="logo">AB<span>.</span></a>
+    <a href="index.html#beyond-code" class="back"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+  </header>
+
+  <main>
+    <h1 class="title">My Photo Gallery</h1>
+    <p class="sub">A collection of moments captured through my lens.</p>
+
+    <div class="grid" id="grid">
+      <figure class="item"><img src="im1.jpg" alt="Photo 1" loading="lazy"></figure>
+      <figure class="item"><img src="im2.jpg" alt="Photo 2" loading="lazy"></figure>
+      <figure class="item"><img src="im3.jpg" alt="Photo 3" loading="lazy"></figure>
+      <figure class="item"><img src="im4.jpg" alt="Photo 4" loading="lazy"></figure>
+      <figure class="item"><img src="im5.jpg" alt="Photo 5" loading="lazy"></figure>
+    </div>
+  </main>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lb-btn lb-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    <button class="lb-btn lb-prev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+    <img id="lb-img" alt="">
+    <button class="lb-btn lb-next" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+    <div class="lb-count" id="lb-count"></div>
+  </div>
+
+  <script>
+    const items = [...document.querySelectorAll('.item')];
+    const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lb-img'), count = document.getElementById('lb-count');
+    let idx = 0;
+
+    // staggered reveal on scroll
+    const io = new IntersectionObserver((es) => es.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }), { threshold: .15 });
+    items.forEach((el, i) => { el.style.transitionDelay = (i % 3) * 0.1 + 's'; io.observe(el); });
+
+    function show(i) {
+      idx = (i + items.length) % items.length;
+      const img = items[idx].querySelector('img');
+      lbImg.classList.remove('swap');
+      void lbImg.offsetWidth;
+      lbImg.src = img.src; lbImg.alt = img.alt; lbImg.classList.add('swap');
+      count.textContent = (idx + 1) + ' / ' + items.length;
+    }
+    function open(i) { show(i); lb.classList.add('open'); lb.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+    function close() { lb.classList.remove('open'); lb.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+
+    items.forEach((el, i) => el.addEventListener('click', () => open(i)));
+    lb.querySelector('.lb-close').onclick = close;
+    lb.querySelector('.lb-prev').onclick = () => show(idx - 1);
+    lb.querySelector('.lb-next').onclick = () => show(idx + 1);
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(idx - 1);
+      if (e.key === 'ArrowRight') show(idx + 1);
+    });
+  </script>
+</body>
+</html>
