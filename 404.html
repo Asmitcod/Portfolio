@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>404 - Agent lost</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0f24;color:#b4c0e6;font-family:Poppins,system-ui,sans-serif;text-align:center}
+canvas{border:1px solid rgba(92,142,255,.3);border-radius:12px;max-width:92vw}
+h1{color:#e8eeff;margin:.8rem 0 .2rem} p{margin:.2rem 0 1rem} code{color:#00e5ff}
+a{display:inline-block;padding:.7rem 1.4rem;border-radius:999px;background:linear-gradient(120deg,#5c8eff,#b46cff);color:#fff;text-decoration:none}
+</style></head><body><main>
+<canvas id="c" width="480" height="320"></canvas>
+<h1>404: state not found</h1>
+<p>My RL agent is exploring, but this page isn't on the map. <code id="steps">steps: 0</code></p>
+<a href="/Portfolio/">Take me home</a>
+</main>
+<script>
+const c=document.getElementById("c"),g=c.getContext("2d"),S=40,cols=c.width/S,rows=c.height/S;
+const visits=Array.from({length:rows},()=>Array(cols).fill(0));
+let x=Math.floor(cols/2),y=Math.floor(rows/2),steps=0;
+function step(){
+  visits[y][x]++;
+  const moves=[[1,0],[-1,0],[0,1],[0,-1]].map(([dx,dy])=>[x+dx,y+dy])
+    .filter(([a,b])=>a>=0&&b>=0&&a<cols&&b<rows)
+    .sort(()=>Math.random()-.5)
+    .sort((p,q)=>visits[p[1]][p[0]]-visits[q[1]][q[0]]);
+  [x,y]=Math.random()<0.2?moves[Math.floor(Math.random()*moves.length)]:moves[0];
+  steps++;document.getElementById("steps").textContent="steps: "+steps;
+}
+function draw(){
+  g.clearRect(0,0,c.width,c.height);
+  for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+    g.fillStyle="rgba(92,142,255,"+Math.min(visits[j][i]*0.12,0.6)+")";g.fillRect(i*S,j*S,S,S);
+    g.strokeStyle="rgba(92,142,255,.15)";g.strokeRect(i*S,j*S,S,S);
+  }
+  g.font="26px serif";g.textAlign="center";g.textBaseline="middle";g.fillText("🤖",x*S+S/2,y*S+S/2);
+}
+setInterval(()=>{step();draw();},250);draw();
+</script></body></html>

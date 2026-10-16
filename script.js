@@ -206,6 +206,123 @@
       status.className = "err"; status.textContent = "Something went wrong. Please try again or use the Email button.";
     }
   });
+/* Easter egg: Konami code -> matrix rain */
+const konami = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","c","a"];
+let kpos = 0;
+window.addEventListener("keydown", (e) => {
+  const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  kpos = k === konami[kpos] ? kpos + 1 : (k === konami[0] ? 1 : 0);
+  if (kpos === konami.length) { kpos = 0; matrixRain(); }
+});
 
+function matrixRain(duration = 6000) {
+  if (reduced || $("#matrix")) return;
+  const c = document.createElement("canvas");
+  c.id = "matrix";
+  c.style.cssText = "position:fixed;inset:0;z-index:99999;pointer-events:none;width:100%;height:100%";
+  document.body.appendChild(c);
+  c.width = innerWidth; c.height = innerHeight;
+  const g = c.getContext("2d"), size = 16;
+  const drops = Array(Math.floor(c.width / size)).fill(1);
+  const chars = "01アイウエオカキクケコ<>{}[]=+*";
+  const id = setInterval(() => {
+    g.fillStyle = "rgba(0,0,0,0.08)"; g.fillRect(0, 0, c.width, c.height);
+    g.fillStyle = "#00ff9c"; g.font = size + "px monospace";
+    drops.forEach((y, i) => {
+      g.fillText(chars[Math.floor(Math.random() * chars.length)], i * size, y * size);
+      drops[i] = y * size > c.height && Math.random() > 0.975 ? 0 : y + 1;
+    });
+  }, 40);
+  setTimeout(() => {
+    clearInterval(id); c.style.transition = "opacity .8s"; c.style.opacity = 0;
+    setTimeout(() => c.remove(), 800);
+  }, duration);
+}
+console.log("%cHey, fellow developer 👋", "font:700 20px Poppins,sans-serif;color:#00e5ff");
+console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the Konami code: ↑ ↑ ↓ ↓ ← → ← → B A",
+  "color:#7f8db8;font-size:12px;line-height:1.6");
+  /* ---------- Hidden terminal ---------- */
+{
+  const term = $("#term"), tbody = $("#term-body"), tinput = $("#term-input");
+  const hist = []; let hi = 0, booted = false;
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const print = (html, cls = "") => {
+    const d = document.createElement("div");
+    d.className = "term-line " + cls; d.innerHTML = html;
+    tbody.appendChild(d); tbody.scrollTop = tbody.scrollHeight;
+  };
+  const a = (href, label) => `<a href="${href}" target="_blank" rel="noopener">${label}</a>`;
+  const EMAIL = "bishtasmit15@gmail.com";
+
+  const cmds = {
+    help: () => print("Available commands:\n  about       who I am\n  skills      what I work with\n  projects    things I've built\n  experience  internship\n  education   where I study\n  achievements\n  contact     how to reach me\n  resume      open my resume\n  theme       toggle dark/light\n  matrix      surprise\n  clear       clear screen\n  exit        close terminal"),
+    about: () => print("Asmit Bisht - final-year B.Tech CS (AI & Robotics) at VIT Chennai.\nI build machine learning and data-driven applications with Python, SQL and Flask."),
+    skills: () => print("Languages : Python, Java, C, C++, SQL, Bash\nWeb       : Flask, Socket.IO, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : Machine Learning, Reinforcement Learning, Agentic AI\nRobotics  : ROS, ESP32, sensor integration"),
+    projects: () => print("1. Smart Traffic Management System - RL traffic signal controller + live dashboard\n2. AquaJeevan - AI/ML + IoT water-borne disease prediction (SIH 2025, Top 100 of 864)\n3. EduMadad - student loan assistance portal (Devshouse 2025, Top 65)\n4. AQI Monitor - Arduino + MQ135 air quality visualizer"),
+    experience: () => print("Software Engineering Intern - Sankalp Sewa Sansthan (Remote)\n25 May 2025 - 20 Jun 2025"),
+    education: () => print("B.Tech Computer Science (AI & Robotics) - VIT Chennai, 2023-2027\nSenior Secondary - St. Joseph's Convent School, Kotdwara"),
+    achievements: () => print("- Smart India Hackathon 2025: Top 100 of 864 teams\n- Devshouse 2025: Top 65 nationally\n- IBM (Cognitive Class): Building AI Agents with Agentic AI"),
+    contact: () => print(`Email   : ${a("mailto:" + EMAIL, EMAIL)}\nGitHub  : ${a("https://github.com/Asmitcod", "github.com/Asmitcod")}\nLinkedIn: ${a("https://www.linkedin.com/in/asmit-bisht-a09682293", "linkedin.com/in/asmit-bisht-a09682293")}`),
+    resume: () => print(a("https://drive.google.com/file/d/1a-dny1H9XHqNxDMo3nl0PZ57saBiGXLK/view", "Open resume")),
+    ls: () => print("about  skills  projects  experience  education  achievements  contact", "dim"),
+    whoami: () => print("visitor (but a very welcome one)"),
+    date: () => print(new Date().toString(), "dim"),
+    theme: () => { $("#theme-toggle").click(); print("theme toggled", "ok"); },
+    matrix: () => { if (typeof matrixRain === "function") { matrixRain(); print("wake up, visitor...", "ok"); } else print("matrix module not installed", "err"); },
+    clear: () => { tbody.innerHTML = ""; },
+    exit: () => closeTerm(),
+  };
+
+  function run(raw) {
+    const line = raw.trim(); if (!line) return;
+    print(`<span style="color:#3ddc97">visitor@asmit:~$</span> ${esc(line)}`, "cmd");
+    const lc = line.toLowerCase();
+    if (lc === "sudo hire asmit") {
+      print("[sudo] password for recruiter: ********", "dim");
+      setTimeout(() => print("Access granted.", "ok"), 600);
+      setTimeout(() => print("Excellent decision. Let's talk:"), 1100);
+      setTimeout(() => cmds.contact(), 1500);
+    } else if (lc.startsWith("sudo")) {
+      print("Permission denied. Nice try though.", "err");
+    } else if (cmds[lc]) {
+      cmds[lc]();
+    } else {
+      print(`command not found: ${esc(line)}. Type 'help' for commands.`, "err");
+    }
+  }
+
+  function openTerm() {
+    term.classList.add("open"); term.setAttribute("aria-hidden", "false");
+    if (!booted) {
+      booted = true;
+      print("Welcome to Asmit's terminal.", "ok");
+      print("Type 'help' to see commands. Try 'sudo hire asmit' :)", "dim");
+    }
+    setTimeout(() => tinput.focus(), 50);
+  }
+  function closeTerm() { term.classList.remove("open"); term.setAttribute("aria-hidden", "true"); tinput.blur(); }
+  const toggleTerm = () => (term.classList.contains("open") ? closeTerm() : openTerm());
+
+  $("#term-fab").addEventListener("click", toggleTerm);
+  $("#term-close").addEventListener("click", closeTerm);
+  term.addEventListener("click", () => tinput.focus());
+
+  window.addEventListener("keydown", (e) => {
+    const t = e.target.tagName, typing = t === "INPUT" || t === "TEXTAREA" || e.target.isContentEditable;
+    if (e.key === "`" && !typing) { e.preventDefault(); toggleTerm(); }
+    if (e.key === "Escape" && term.classList.contains("open")) closeTerm();
+  });
+
+  tinput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { hist.push(tinput.value); hi = hist.length; run(tinput.value); tinput.value = ""; }
+    else if (e.key === "ArrowUp") { e.preventDefault(); if (hi > 0) tinput.value = hist[--hi]; }
+    else if (e.key === "ArrowDown") { e.preventDefault(); tinput.value = hi < hist.length - 1 ? hist[++hi] : ((hi = hist.length), ""); }
+    else if (e.key === "Tab") {
+      e.preventDefault();
+      const m = Object.keys(cmds).filter((c) => c.startsWith(tinput.value.toLowerCase()));
+      if (m.length === 1) tinput.value = m[0];
+    }
+  });
+}
   $("#year").textContent = new Date().getFullYear();
 })();

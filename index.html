@@ -55,13 +55,12 @@
         <h2 class="hero__role reveal">I build <span id="typed" class="typed"></span><span class="caret"></span></h2>
         <p class="hero__desc reveal">
           Final-year B.Tech Computer Science (AI &amp; Robotics) student at VIT Chennai.
-          I work with Python, SQL, Flask and machine learning to build data-driven applications,
+          I work with Java, SQL and machine learning to build data-driven applications,
           and I like turning messy data into something people can actually use.
         </p>
         <div class="hero__cta reveal">
           <a href="#projects" class="btn btn--primary magnetic"><span>View Projects</span><i class="fas fa-arrow-right"></i></a>
-          <a href="resume.pdf" target="_blank" rel="noopener" class="btn btn--outline magnetic"><span>Resume</span><i class="fas fa-download"></i></a>
-          <a href="https://github.com/Asmitcod" target="_blank" rel="noopener" class="social magnetic" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://drive.google.com/file/d/1a-dny1H9XHqNxDMo3nl0PZ57saBiGXLK/view" target="_blank" rel="noopener" class="btn btn--outline magnetic"><span>Resume</span><i class="fas fa-download"></i></a>          <a href="https://github.com/Asmitcod" target="_blank" rel="noopener" class="social magnetic" aria-label="GitHub"><i class="fab fa-github"></i></a>
           <a href="https://www.linkedin.com/in/asmit-bisht-a09682293" target="_blank" rel="noopener" class="social magnetic" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
         <div class="stats reveal">
@@ -123,7 +122,7 @@
           </div>
           <h3>AquaJeevan - Smart Health &amp; Water Surveillance</h3>
           <p>Ranked Top 100 of 864 teams. An AI/ML and IoT solution using ESP32 sensors to predict and prevent water-borne diseases in rural India. Led the first hardware-software integration, feeding embedded sensor streams into ML inference models.</p>
-          <ul class="tags"><li>AI/ML</li><li>IoT</li><li>ESP32</li><li>Python</li></ul>
+          <ul class="tags"><li>AI/ML</li><li>IoT</li><li>Supabase</li><li>Python</li></ul>
         </article>
 
         <article class="card project reveal tilt">
@@ -202,7 +201,14 @@
       <div class="grid grid--3">
         <div class="card ach reveal tilt"><i class="fas fa-trophy"></i><h3>Smart India Hackathon 2025</h3><p>Ranked Top 100 out of 864 teams with AquaJeevan.</p></div>
         <div class="card ach reveal tilt"><i class="fas fa-medal"></i><h3>Devshouse 2025</h3><p>Top 65 nationally at the GDG VIT Chennai hackathon with EduMadad.</p></div>
-        <div class="card ach reveal tilt"><i class="fas fa-certificate"></i><h3>Building AI Agents with Agentic AI</h3><p>IBM (Cognitive Class) certification.</p></div>
+        <div class="card ach reveal tilt">
+  <i class="fas fa-certificate"></i>
+  <h3>Building AI Agents with Agentic AI</h3>
+  <p>IBM (Cognitive Class) certification.</p>
+  <a href="https://courses.ibmcep.cognitiveclass.ai/certificates/309f0a4d4d7642dc80aebb8b332074c9" target="_blank" rel="noopener" class="project__link">
+    <i class="fas fa-up-right-from-square"></i> View Certificate
+  </a>
+</div>
       </div>
     </section>
 
@@ -257,6 +263,20 @@
   </footer>
 
   <a href="#top" class="to-top" id="to-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></a>
+  <button class="term-fab" id="term-fab" aria-label="Open terminal">&gt;_</button>
+
+<div class="term" id="term" role="dialog" aria-label="Terminal" aria-hidden="true">
+  <div class="term-bar">
+    <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+    <span class="term-title">visitor@asmit:~</span>
+    <button id="term-close" aria-label="Close terminal">&times;</button>
+  </div>
+  <div class="term-body" id="term-body"></div>
+  <label class="term-row">
+    <span class="term-prompt">visitor@asmit:~$</span>
+    <input id="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" />
+  </label>
+</div>
   <script src="script.js"></script>
 </body>
 </html>
