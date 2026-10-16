@@ -257,7 +257,7 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
   const cmds = {
     help: () => print("Available commands:\n  about       who I am\n  skills      what I work with\n  projects    things I've built\n  experience  internship\n  education   where I study\n  achievements\n  contact     how to reach me\n  resume      open my resume\n  theme       toggle dark/light\n  matrix      surprise\n  clear       clear screen\n  exit        close terminal"),
     about: () => print("Asmit Bisht - final-year B.Tech CS (AI & Robotics) at VIT Chennai.\nI build machine learning and data-driven applications with Python, SQL and Flask."),
-    skills: () => print("Languages : Python, Java, C, C++, SQL, Bash\nWeb       : Flask, Socket.IO, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : Machine Learning, Reinforcement Learning, Agentic AI\nRobotics  : ROS, ESP32, sensor integration"),
+    skills: () => print("Languages : Python, Java, C, C++, SQL, Bash\nWeb       : Flask, Socket.IO, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : Machine Learning, Reinforcement Learning, Agentic AI\nRobotics  : ROS, Raspberry Pi, sensor integration"),
     projects: () => print("1. Smart Traffic Management System - RL traffic signal controller + live dashboard\n2. AquaJeevan - AI/ML + IoT water-borne disease prediction (SIH 2025, Top 100 of 864)\n3. EduMadad - student loan assistance portal (Devshouse 2025, Top 65)\n4. AQI Monitor - Arduino + MQ135 air quality visualizer"),
     experience: () => print("Software Engineering Intern - Sankalp Sewa Sansthan (Remote)\n25 May 2025 - 20 Jun 2025"),
     education: () => print("B.Tech Computer Science (AI & Robotics) - VIT Chennai, 2023-2027\nSenior Secondary - St. Joseph's Convent School, Kotdwara"),
@@ -298,7 +298,7 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
       print("Welcome to Asmit's terminal.", "ok");
       print("Type 'help' to see commands. Try 'sudo hire asmit' :)", "dim");
     }
-    setTimeout(() => tinput.focus(), 50);
+    focusSoon(tinput);
   }
   function closeTerm() { term.classList.remove("open"); term.setAttribute("aria-hidden", "true"); tinput.blur(); }
   const toggleTerm = () => (term.classList.contains("open") ? closeTerm() : openTerm());
@@ -324,5 +324,156 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
     }
   });
 }
+
+  /* focus helper: retries briefly, because freshly shown overlays can refuse focus for a frame */
+  function focusSoon(el) {
+    [0, 60, 200, 450].forEach((ms) => setTimeout(() => { if (document.activeElement !== el) el.focus({ preventScroll: true }); }, ms));
+  }
+
+  /* ---------- Flip photo <-> Minecraft avatar ---------- */
+  {
+    const flip = $("#flip"), hint = $("#flip-hint");
+    if (flip) {
+      flip.addEventListener("click", () => {
+        const on = flip.classList.toggle("flipped");
+        flip.setAttribute("aria-pressed", String(on));
+        if (hint) hint.textContent = on ? "flip back" : "click me";
+      });
+    }
+  }
+
+  /* ---------- Command palette (Ctrl/Cmd + K) ---------- */
+  {
+    const root = $("#cmdk"), input = $("#cmdk-input"), list = $("#cmdk-list");
+    const go = (id) => () => { const el = document.getElementById(id); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); };
+    const link = (url) => () => window.open(url, "_blank", "noopener");
+    const project = (name) => () => {
+      const h = $$("#projects .project h3").find((x) => x.textContent.includes(name));
+      const card = h && h.closest(".project");
+      if (!card) return go("projects")();
+      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+    };
+    const ghTarget = () => { const g = $("#gh"); (g && !g.hidden ? go("gh") : go("projects"))(); };
+    const items = [
+      { g: "Go to", icon: "fas fa-user", label: "About", run: go("about"), k: "home top hero intro" },
+      { g: "Go to", icon: "fas fa-briefcase", label: "Experience", run: go("experience"), k: "internship work" },
+      { g: "Go to", icon: "fas fa-diagram-project", label: "Projects", run: go("projects"), k: "work portfolio" },
+      { g: "Go to", icon: "fab fa-github", label: "GitHub activity", run: ghTarget, k: "repos latest code" },
+      { g: "Go to", icon: "fas fa-code", label: "Skills", run: go("skills"), k: "tech stack languages" },
+      { g: "Go to", icon: "fas fa-graduation-cap", label: "Education", run: go("education"), k: "college school vit" },
+      { g: "Go to", icon: "fas fa-trophy", label: "Achievements", run: go("achievements"), k: "awards certificate hackathon" },
+      { g: "Go to", icon: "fas fa-microscope", label: "Research", run: go("research"), k: "paper fintech" },
+      { g: "Go to", icon: "fas fa-envelope", label: "Contact", run: go("contact"), k: "message hire form" },
+      { g: "Projects", icon: "fas fa-traffic-light", label: "Smart Traffic Management System", run: project("Smart Traffic"), k: "reinforcement learning rl flask" },
+      { g: "Projects", icon: "fas fa-droplet", label: "AquaJeevan", run: project("AquaJeevan"), k: "sih iot water health" },
+      { g: "Projects", icon: "fas fa-graduation-cap", label: "EduMadad", run: project("EduMadad"), k: "loan devshouse portal" },
+      { g: "Projects", icon: "fas fa-wind", label: "AQI Monitor", run: project("AQI"), k: "arduino air quality" },
+      { g: "Links", icon: "fab fa-github", label: "Open GitHub profile", run: link("https://github.com/Asmitcod"), k: "code repos" },
+      { g: "Links", icon: "fab fa-linkedin", label: "Open LinkedIn", run: link("https://www.linkedin.com/in/asmit-bisht-a09682293"), k: "profile connect" },
+      { g: "Links", icon: "fas fa-file-lines", label: "Open resume", run: link("https://drive.google.com/file/d/1a-dny1H9XHqNxDMo3nl0PZ57saBiGXLK/view"), k: "cv download" },
+      { g: "Links", icon: "fas fa-certificate", label: "View IBM Agentic AI certificate", run: link("https://courses.ibmcep.cognitiveclass.ai/certificates/309f0a4d4d7642dc80aebb8b332074c9"), k: "ibm cognitive class" },
+      { g: "Links", icon: "fab fa-instagram", label: "Open Instagram (photography)", run: link("https://www.instagram.com/pixels.in3d_vitc"), k: "photos" },
+      { g: "Links", icon: "fas fa-image", label: "Photo gallery", run: () => { location.href = "gallery.html"; }, k: "pictures" },
+      { g: "Links", icon: "fas fa-paper-plane", label: "Email me", run: link("https://mail.google.com/mail/?view=cm&fs=1&to=bishtasmit15@gmail.com"), k: "mail gmail" },
+      { g: "Actions", icon: "fas fa-circle-half-stroke", label: "Toggle dark / light theme", run: () => $("#theme-toggle").click(), k: "mode color" },
+      { g: "Actions", icon: "fas fa-terminal", label: "Open terminal", run: () => { const f = $("#term-fab"); if (f) f.click(); }, k: "console shell cli" },
+      { g: "Actions", icon: "fas fa-user-astronaut", label: "Flip my photo to avatar", run: () => { go("about")(); setTimeout(() => { const f = $("#flip"); if (f) f.click(); }, 500); }, k: "minecraft picture" },
+      { g: "Actions", icon: "fas fa-wand-magic-sparkles", label: "Matrix rain", run: () => { if (typeof matrixRain === "function") matrixRain(); }, k: "easter egg surprise" },
+      { g: "Actions", icon: "fas fa-arrow-up", label: "Back to top", run: () => window.scrollTo({ top: 0, behavior: "smooth" }), k: "scroll" },
+    ];
+
+    let shown = [], sel = 0, lastFocus = null;
+    const score = (it, q) => {
+      const hay = (it.label + " " + it.g + " " + it.k).toLowerCase();
+      const parts = q.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!parts.every((p) => hay.includes(p))) return -1;
+      return it.label.toLowerCase().startsWith(q.toLowerCase()) ? 2 : it.label.toLowerCase().includes(q.toLowerCase()) ? 1 : 0;
+    };
+    function render() {
+      const q = input.value.trim();
+      shown = (q ? items.map((it) => [it, score(it, q)]).filter((x) => x[1] >= 0).sort((a, b) => b[1] - a[1]).map((x) => x[0]) : items);
+      if (sel >= shown.length) sel = 0;
+      list.innerHTML = "";
+      if (!shown.length) { list.innerHTML = '<li class="cmdk__empty">No results. Try "projects" or "theme".</li>'; return; }
+      let group = "";
+      shown.forEach((it, i) => {
+        if (!q && it.g !== group) { group = it.g; const h = document.createElement("li"); h.className = "cmdk__group"; h.textContent = group; list.appendChild(h); }
+        const li = document.createElement("li");
+        li.className = "cmdk__item" + (i === sel ? " active" : "");
+        li.setAttribute("role", "option");
+        li.innerHTML = `<i class="${it.icon}"></i><span></span>${q ? "<small></small>" : ""}`;
+        li.children[1].textContent = it.label;
+        if (q) li.children[2].textContent = it.g;
+        li.addEventListener("mousemove", () => { if (sel !== i) { sel = i; mark(); } });
+        li.addEventListener("click", () => exec(i));
+        list.appendChild(li);
+      });
+    }
+    function mark() {
+      $$(".cmdk__item", list).forEach((el, i) => el.classList.toggle("active", i === sel));
+      const a = $(".cmdk__item.active", list); if (a) a.scrollIntoView({ block: "nearest" });
+    }
+    function open() {
+      lastFocus = document.activeElement; sel = 0; input.value = ""; render();
+      root.classList.add("open"); root.setAttribute("aria-hidden", "false");
+      focusSoon(input);
+    }
+    function close() {
+      root.classList.remove("open"); root.setAttribute("aria-hidden", "true");
+      if (lastFocus && lastFocus.focus) lastFocus.blur();
+    }
+    function exec(i) { const it = shown[i]; if (!it) return; close(); setTimeout(it.run, 120); }
+
+    input.addEventListener("input", () => { sel = 0; render(); });
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") { e.preventDefault(); sel = (sel + 1) % Math.max(shown.length, 1); mark(); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); sel = (sel - 1 + shown.length) % Math.max(shown.length, 1); mark(); }
+      else if (e.key === "Enter") { e.preventDefault(); exec(sel); }
+    });
+    root.addEventListener("click", (e) => { if (e.target === root) close(); });
+    $("#cmdk-btn").addEventListener("click", open);
+    window.addEventListener("keydown", (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); root.classList.contains("open") ? close() : open(); }
+      else if (e.key === "Escape" && root.classList.contains("open")) close();
+    });
+  }
+
+  /* ---------- Latest repos from GitHub ---------- */
+  (async () => {
+    const box = $("#gh"), grid = $("#gh-grid");
+    if (!box || !grid) return;
+    const user = "Asmitcod", cacheKey = "gh-repos-v1";
+    const colors = { Python: "#3572A5", JavaScript: "#f1e05a", HTML: "#e34c26", CSS: "#563d7c", Java: "#b07219", C: "#555555", "C++": "#f34b7d", Shell: "#89e051", Jupyter: "#DA5B0B", "Jupyter Notebook": "#DA5B0B", TypeScript: "#3178c6" };
+    const ago = (iso) => {
+      const d = Math.floor((Date.now() - new Date(iso)) / 864e5);
+      return d < 1 ? "today" : d < 30 ? d + "d ago" : d < 365 ? Math.floor(d / 30) + "mo ago" : Math.floor(d / 365) + "y ago";
+    };
+    try {
+      let repos; const cached = sessionStorage.getItem(cacheKey);
+      if (cached) repos = JSON.parse(cached);
+      else {
+        const r = await fetch(`https://api.github.com/users/${user}/repos?sort=pushed&per_page=12`, { headers: { Accept: "application/vnd.github+json" } });
+        if (!r.ok) throw new Error("github " + r.status);
+        repos = await r.json();
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(repos)); } catch (e) {}
+      }
+      repos = repos.filter((r) => !r.fork && r.name.toLowerCase() !== user.toLowerCase()).slice(0, 6);
+      if (!repos.length) return;
+      repos.forEach((r) => {
+        const a = document.createElement("a");
+        a.className = "card repo"; a.href = r.html_url; a.target = "_blank"; a.rel = "noopener";
+        const h = document.createElement("h4"); h.textContent = r.name;
+        const p = document.createElement("p"); p.textContent = r.description || "No description yet.";
+        const m = document.createElement("div"); m.className = "repo__meta";
+        if (r.language) { const l = document.createElement("span"); const dot = document.createElement("i"); dot.className = "lang-dot"; dot.style.background = colors[r.language] || "var(--primary)"; l.append(dot, r.language); m.append(l); }
+        const st = document.createElement("span"); st.textContent = "\u2605 " + r.stargazers_count; m.append(st);
+        const up = document.createElement("span"); up.textContent = "updated " + ago(r.pushed_at); m.append(up);
+        a.append(h, p, m); grid.append(a);
+      });
+      box.hidden = false;
+    } catch (err) { /* stay hidden if GitHub is unreachable */ }
+  })();
+
   $("#year").textContent = new Date().getFullYear();
 })();

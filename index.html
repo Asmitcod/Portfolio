@@ -41,6 +41,7 @@
       </ul>
     </nav>
     <div class="header__actions">
+      <button class="icon-btn" id="cmdk-btn" aria-label="Open command palette (Ctrl+K)" title="Search (Ctrl+K)"><i class="fas fa-magnifying-glass"></i></button>
       <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
       <button class="icon-btn menu-btn" id="menu-btn" aria-label="Menu"><i class="fas fa-bars"></i></button>
     </div>
@@ -74,7 +75,13 @@
         <div class="photo tilt">
           <div class="photo__ring"></div>
           <div class="photo__ring photo__ring--2"></div>
-          <img src="as.png" alt="Asmit Bisht" class="photo__img" />
+          <button class="flip" id="flip" type="button" aria-pressed="false" aria-label="Flip photo to see my Minecraft avatar">
+            <span class="flip__inner">
+              <img src="as.png" alt="Asmit Bisht" class="flip__face flip__front" />
+              <img src="avatar.png" alt="Minecraft avatar of Asmit" class="flip__face flip__back" loading="lazy" />
+            </span>
+            <span class="flip__hint" id="flip-hint">click me</span>
+          </button>
           <span class="chip chip--1"><i class="fab fa-python"></i> Python</span>
           <span class="chip chip--2"><i class="fas fa-database"></i> SQL</span>
           <span class="chip chip--3"><i class="fas fa-brain"></i> ML</span>
@@ -121,7 +128,7 @@
             <span class="pill">Smart India Hackathon 2025</span>
           </div>
           <h3>AquaJeevan - Smart Health &amp; Water Surveillance</h3>
-          <p>Ranked Top 100 of 864 teams. An AI/ML and IoT solution using ESP32 sensors to predict and prevent water-borne diseases in rural India. Led the first hardware-software integration, feeding embedded sensor streams into ML inference models.</p>
+          <p>Ranked Top 100 of 864 teams. An AI/ML and IoT solution using sensor nodes to predict and prevent water-borne diseases in rural India. Led the first hardware-software integration, feeding embedded sensor streams into ML inference models.</p>
           <ul class="tags"><li>AI/ML</li><li>IoT</li><li>Supabase</li><li>Python</li></ul>
         </article>
 
@@ -148,6 +155,13 @@
         </article>
 
       </div>
+    
+      <div class="gh reveal" id="gh" hidden>
+        <h3 class="gh__title"><i class="fab fa-github"></i> Latest from GitHub
+          <a href="https://github.com/Asmitcod?tab=repositories" target="_blank" rel="noopener">View all &rarr;</a>
+        </h3>
+        <div class="grid grid--3" id="gh-grid"></div>
+      </div>
     </section>
 
     <!-- SKILLS -->
@@ -159,12 +173,12 @@
         <div class="card skill reveal tilt"><h3><i class="fas fa-database"></i> Databases &amp; Analysis</h3><ul class="tags"><li>PostgreSQL</li><li>AWS DynamoDB</li><li>Schema Design</li><li>Data Preprocessing</li><li>Data Analysis</li><li>Data Visualization</li></ul></div>
         <div class="card skill reveal tilt"><h3><i class="fas fa-cloud"></i> Cloud &amp; Tools</h3><ul class="tags"><li>AWS</li><li>Git</li><li>GitHub</li><li>Git Bash</li><li>Bash Scripting</li></ul></div>
         <div class="card skill reveal tilt"><h3><i class="fas fa-brain"></i> AI &amp; ML</h3><ul class="tags"><li>Machine Learning</li><li>Reinforcement Learning</li><li>Agentic AI</li><li>ML Inference</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-microchip"></i> Robotics &amp; IoT</h3><ul class="tags"><li>ROS</li><li>ESP32</li><li>Sensor Integration</li></ul></div>
+        <div class="card skill reveal tilt"><h3><i class="fas fa-microchip"></i> Robotics &amp; IoT</h3><ul class="tags"><li>ROS</li><li>Raspberry Pi</li><li>Sensor Integration</li></ul></div>
       </div>
       <div class="marquee reveal" aria-hidden="true">
         <div class="marquee__track">
-          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>ESP32</span><span>Data Analysis</span>
-          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>ESP32</span><span>Data Analysis</span>
+          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>Raspberry Pi</span><span>Data Analysis</span>
+          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>Raspberry Pi</span><span>Data Analysis</span>
         </div>
       </div>
     </section>
@@ -263,6 +277,17 @@
   </footer>
 
   <a href="#top" class="to-top" id="to-top" aria-label="Scroll to top"><i class="fas fa-arrow-up"></i></a>
+  <div class="cmdk" id="cmdk" role="dialog" aria-modal="true" aria-label="Command palette" aria-hidden="true">
+    <div class="cmdk__box">
+      <div class="cmdk__search">
+        <i class="fas fa-magnifying-glass"></i>
+        <input id="cmdk-input" placeholder="Type a command or search..." autocomplete="off" spellcheck="false" />
+        <kbd>Esc</kbd>
+      </div>
+      <ul class="cmdk__list" id="cmdk-list" role="listbox"></ul>
+      <div class="cmdk__foot"><span><kbd>&uarr;</kbd><kbd>&darr;</kbd> navigate</span><span><kbd>Enter</kbd> run</span><span><kbd>Ctrl</kbd>+<kbd>K</kbd> toggle</span></div>
+    </div>
+  </div>
   <button class="term-fab" id="term-fab" aria-label="Open terminal">&gt;_</button>
 
 <div class="term" id="term" role="dialog" aria-label="Terminal" aria-hidden="true">
