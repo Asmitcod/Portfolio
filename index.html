@@ -9,7 +9,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" referrerpolicy="no-referrer" />
+  <script>
+    /* Phone vs desktop switch: phones (<= 768px) get the phone home screen; desktop is unchanged. */
+    (function () {
+      var narrow = window.matchMedia("(max-width: 768px)"), flag = null;
+      try { flag = sessionStorage.getItem("view-desktop"); } catch (e) {}
+      window.__PHONE__ = narrow.matches && flag !== "1";
+      if (window.__PHONE__) document.documentElement.classList.add("phone-mode");
+      var reload = function () { location.reload(); };
+      if (narrow.addEventListener) narrow.addEventListener("change", reload); else if (narrow.addListener) narrow.addListener(reload);
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)" />
 </head>
 <body class="dark" id="top">
 
@@ -302,6 +314,20 @@
     <input id="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" />
   </label>
 </div>
-  <script src="script.js"></script>
+  <script>
+    if (window.__PHONE__) {
+      document.write('<scr' + 'ipt src="mobile.js"></scr' + 'ipt>');
+    } else {
+      document.write('<scr' + 'ipt src="script.js"></scr' + 'ipt>');
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        /* small phone-sized screen viewing the desktop site on purpose: offer a way back */
+        var back = document.createElement("button");
+        back.textContent = "\uD83D\uDCF1 Phone version";
+        back.style.cssText = "position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:1500;padding:8px 16px;border-radius:999px;border:1px solid rgba(92,142,255,.5);background:#0a0f24;color:#e8eeff;font:500 13px Poppins,sans-serif;cursor:pointer";
+        back.onclick = function () { try { sessionStorage.removeItem("view-desktop"); } catch (e) {} location.reload(); };
+        document.body.appendChild(back);
+      }
+    }
+  </script>
 </body>
 </html>
