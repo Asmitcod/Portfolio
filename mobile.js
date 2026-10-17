@@ -83,33 +83,36 @@
   phone.innerHTML = `
     <div class="ph-wall" id="ph-wall" aria-hidden="true">
       <div class="ph-wall__base"></div>
-      <div class="ph-wall__data ph-wall__data--l"><pre></pre></div>
-      <div class="ph-wall__data ph-wall__data--r"><pre></pre></div>
-      <div class="ph-wall__floor"><i></i></div>
+      <div class="ph-wall__orb"><i></i><i></i><i></i></div>
       <canvas class="ph-wall__net" id="ph-net"></canvas>
       <canvas class="ph-wall__cv" id="ph-cv"></canvas>
-      <div class="ph-wall__sweep"></div>
-      <div class="ph-wall__scan"></div>
       <div class="ph-wall__vig"></div>
     </div>
     <section class="ph-home ph-hold">
       <div class="ph-status"><b class="ph-clock">${clock()}</b><span class="ph-status__os">ASMIT\u00b7OS</span><span><i class="fas fa-signal"></i><i class="fas fa-wifi"></i><i class="fas fa-battery-full"></i></span></div>
       <div class="ph-scroll">
-        <label class="ph-search"><i class="fas fa-magnifying-glass"></i><input id="ph-q" type="search" placeholder="Search apps" autocomplete="off" enterkeyhint="search" /></label>
-        <div class="ph-widget ph-profile">
-          <div class="ph-flip" id="ph-flip" role="button" aria-label="Flip photo"><div class="ph-flip__inner"><img src="as.png" alt="Asmit Bisht" /><img src="avatar.webp" alt="Minecraft avatar" loading="lazy" /></div></div>
-          <div><h2>Asmit Bisht</h2><p>CS (AI &amp; Robotics)<br />VIT Chennai</p></div>
-          <button class="ph-theme" aria-label="Toggle theme"></button>
+        <div class="ph-bento" id="ph-bento">
+          <div class="ph-tile ph-t-profile">
+            <div class="ph-flip" id="ph-flip" role="button" aria-label="Flip photo"><div class="ph-flip__inner"><img src="as.png" alt="Asmit Bisht" /><img src="avatar.webp" alt="Minecraft avatar" loading="lazy" /></div></div>
+            <div class="ph-t-profile__txt"><span class="ph-eyebrow">// hello, world</span><h2>Asmit Bisht</h2><p>CS (AI &amp; Robotics) \u00b7 VIT Chennai</p><span class="ph-loc"><i></i><b id="ph-loc"></b></span></div>
+            <button class="ph-theme" aria-label="Toggle theme"></button>
+          </div>
+          <button class="ph-tile ph-t-projects" data-app="projects"><span class="ph-eyebrow"><i class="fas fa-diagram-project"></i> Projects</span><div class="ph-rot" id="ph-rot"></div><div class="ph-rot__dots" id="ph-rotdots"></div></button>
+          <button class="ph-tile ph-t-sm ph-t-gal" data-app="gallery"><span class="ph-sm__ic"><i class="fas fa-image"></i></span><span class="ph-sm__t"><b>Gallery</b><small>5 photos</small></span></button>
+          <button class="ph-tile ph-t-sm" data-app="experience"><span class="ph-sm__ic"><i class="fas fa-briefcase"></i></span><span class="ph-sm__t"><b>Experience</b><small id="ph-s-exp"></small></span></button>
+          <button class="ph-tile ph-t-sm" data-app="education"><span class="ph-sm__ic"><i class="fas fa-graduation-cap"></i></span><span class="ph-sm__t"><b>Education</b><small id="ph-s-edu"></small></span></button>
+          <button class="ph-tile ph-t-sm" data-app="research"><span class="ph-sm__ic"><i class="fas fa-microscope"></i></span><span class="ph-sm__t"><b>Research</b><small id="ph-s-res"></small></span></button>
+          <button class="ph-tile ph-t-term" data-app="terminal"><span class="ph-eyebrow"><i class="fas fa-terminal"></i> Terminal</span><div class="ph-tm"><span class="ph-tm__p">visitor@asmit:~$</span> <span id="ph-typed"></span><i class="ph-caret"></i></div><div class="ph-tm__out" id="ph-typed-out"></div></button>
+          <button class="ph-tile ph-t-skills" data-app="skills"><div class="ph-marq"><div class="ph-marq__in" id="ph-marq"></div></div></button>
+          <button class="ph-tile ph-t-awards" data-app="awards"><span class="ph-eyebrow"><i class="fas fa-trophy"></i> Awards</span><b class="ph-big">Top 100</b><span class="ph-sub">864 teams \u00b7 SIH '25</span></button>
+          <button class="ph-tile ph-t-gh" data-app="github"><span class="ph-eyebrow"><i class="fab fa-github"></i> GitHub<em class="ph-livedot"></em></span><b class="ph-gh__name" id="ph-gh-name">Asmitcod</b><span class="ph-sub" id="ph-gh-sub">latest repos</span></button>
         </div>
-        <div class="ph-label"><span>// apps</span></div>
-        <div class="ph-grid" id="ph-grid"></div>
         <div class="ph-foot"><button id="ph-desktop">Open desktop version</button></div>
       </div>
       <nav class="ph-dock" id="ph-dock"></nav>
     </section>
     <section class="ph-lock" id="ph-lock">
       <button class="ph-skip">Skip</button>
-      <div class="ph-lock__top"><i class="fas fa-lock"></i><span>LOCKED</span></div>
       <div class="ph-lock__date" id="ph-ldate">${dateLine()}</div>
       <div class="ph-aclock" id="ph-aclock">${clockSVG()}</div>
       <div class="ph-lock__digi" id="ph-digi"></div>
@@ -121,27 +124,25 @@
   setInterval(() => { $$(".ph-clock").forEach((c) => (c.textContent = clock())); const d = $("#ph-ldate"); if (d) d.textContent = dateLine(); }, 20000);
 
   /* ---------- Wallpaper (one layer shared by lock + home) ---------- */
-  const hexRain = () => { let t = ""; for (let i = 0; i < 90; i++) t += Math.random().toString(16).slice(2, 8).toUpperCase() + (i % 4 === 0 ? " 0101" : " 1A") + "\n"; return t + t; };
-  $$(".ph-wall__data pre").forEach((p) => (p.textContent = hexRain()));
-
   let wall = null;
   const wallLayout = (mode) => {
     const W = phone.clientWidth, H = phone.clientHeight;
     if (mode === "lock") {
       const r = $("#ph-stage").getBoundingClientRect(), pr = phone.getBoundingClientRect();
-      return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(70, Math.min(r.height * 0.52, W * 0.36)), dim: 1 };
+      return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(90, Math.min(r.height * 0.6, W * 0.44)), dim: 1 };
     }
-    return { cx: W / 2, cy: H * 0.46, r: W * 0.47, dim: 0.5 };
+    return { cx: W / 2, cy: H * 0.42, r: W * 0.62, dim: 0.6 };
   };
   const loadScript = (src) => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.async = false; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   const bootWall = () => {
     wall = window.PhoneWall ? window.PhoneWall.init($("#ph-cv"), { layout: wallLayout }) : null;
     if (wall) { wall.setMode(ss.get("ph-unlocked") ? "home" : "lock"); setTimeout(() => wall && wall.refresh(), 700); }
+    else $("#ph-wall").classList.add("no3d");
   };
-  /* low-power phones (data saver, or 4 GB RAM or less) skip the 3D scene and keep the light 2D wallpaper */
-  const lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory <= 4));
+  /* low-power phones (data saver, or under 4 GB RAM) skip the 3D scene and keep the CSS orb */
+  const lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory < 4));
   (lite ? Promise.reject(new Error("lite")) : window.THREE ? Promise.resolve() : loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"))
-    .then(() => loadScript("phone-wall.js")).then(bootWall).catch(() => { /* no WebGL / offline: the CSS wallpaper stays */ });
+    .then(() => loadScript("phone-wall.js")).then(bootWall).catch(() => { $("#ph-wall").classList.add("no3d"); /* no WebGL / offline / low-power: CSS orb */ });
 
   /* ---------- Connected dots: a light 2D network behind the 3D core ---------- */
   const net = (() => {
@@ -219,23 +220,73 @@
   tickClock();
   const stopClock = () => { cancelAnimationFrame(clockRaf); clockRaf = 0; };
 
-  /* ---------- Home: grid, dock, search, widgets ---------- */
-  const grid = $("#ph-grid");
+  /* ---------- Home: bento of live widgets ---------- */
+  let current = null; /* open app sheet (declared early: the live tiles check it) */
   const seenBadge = ss.get("ph-badge-seen");
-  APPS.forEach((app, idx) => {
-    if (app.dock) return;
-    const b = el("button", "ph-app"); b.style.setProperty("--i", idx);
-    b.style.setProperty("--g1", app.g[0]); b.style.setProperty("--g2", app.g[1]);
-    b.innerHTML = `<div class="ph-ico"><i class="${app.icon}"></i>${app.badge && !seenBadge ? '<em class="ph-badge">1</em>' : ""}</div><span>${app.name}</span>`;
-    b.addEventListener("click", () => openApp(app, $(".ph-ico", b)));
-    app.node = b; grid.appendChild(b);
-  });
-  const empty = el("div", "ph-empty", "No apps match your search."); empty.hidden = true; grid.appendChild(empty);
-  $("#ph-q").addEventListener("input", (e) => {
-    const q = e.target.value.trim().toLowerCase(); let n = 0;
-    APPS.forEach((a) => { if (!a.node) return; const ok = !q || a.name.toLowerCase().includes(q) || a.id.includes(q); a.node.hidden = !ok; if (ok) n++; });
-    empty.hidden = n > 0;
-  });
+  const byId = (id) => APPS.find((a) => a.id === id);
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  const homeVisible = () => !document.hidden && !current && $("#ph-lock").style.display === "none";
+  const ago = (iso) => { const d = Math.floor((Date.now() - new Date(iso)) / 864e5); return d < 1 ? "today" : d < 30 ? d + "d ago" : d < 365 ? Math.floor(d / 30) + "mo ago" : Math.floor(d / 365) + "y ago"; };
+  $$("#ph-bento .ph-tile").forEach((t, i) => t.style.setProperty("--i", i));
+  $$("#ph-bento [data-app]").forEach((t) => t.addEventListener("click", () => openApp(byId(t.dataset.app), t)));
+
+  /* profile: live Chennai time */
+  const ist = () => new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
+  const setLoc = () => { $("#ph-loc").textContent = `Chennai \u00b7 ${ist()}`; };
+  setLoc(); setInterval(setLoc, 20000);
+
+  /* projects: rotating cards read from the desktop markup */
+  const projs = $$("#projects .project").map((p) => ({ t: ($("h3", p) || {}).textContent || "", d: ($("p", p) || {}).textContent || "" })).filter((p) => p.t);
+  const rotEl = $("#ph-rot"), rotDots = $("#ph-rotdots"); let pi = 0;
+  const showProj = (i) => {
+    const p = projs[i]; rotEl.classList.remove("in"); rotEl.innerHTML = `<h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>`; void rotEl.offsetWidth; rotEl.classList.add("in");
+    $$("i", rotDots).forEach((d, k) => d.classList.toggle("on", k === i));
+  };
+  if (projs.length) {
+    projs.forEach(() => rotDots.append(el("i"))); showProj(0);
+    if (!reduceMotion) setInterval(() => { if (homeVisible()) showProj((pi = (pi + 1) % projs.length)); }, 4200);
+  }
+
+  /* github: newest real repo */
+  (async () => {
+    try {
+      const key = "gh-repos-v1"; let repos = null; const c = ss.get(key);
+      if (c) repos = JSON.parse(c);
+      else {
+        const r = await fetch("https://api.github.com/users/Asmitcod/repos?sort=pushed&per_page=12", { headers: { Accept: "application/vnd.github+json" } });
+        if (!r.ok) throw new Error("gh"); repos = await r.json(); ss.set(key, JSON.stringify(repos));
+      }
+      const top = repos.filter((r) => !r.fork && r.name.toLowerCase() !== "asmitcod")[0]; if (!top) return;
+      $("#ph-gh-name").textContent = top.name; $("#ph-gh-sub").textContent = `${top.language || "code"} \u00b7 ${ago(top.pushed_at)}`;
+      $(".ph-t-gh").classList.add("is-live");
+    } catch (e) { /* keeps the static label */ }
+  })();
+
+  /* terminal: types a few real commands */
+  const typed = $("#ph-typed"), typedOut = $("#ph-typed-out");
+  const SCRIPT = [["whoami", "asmit bisht"], ["ls skills/", "python  java  c++  sql  ros"], ["ls projects/", "traffic-rl  aquajeevan  edumadad  aqi-monitor"]];
+  (async () => {
+    if (reduceMotion) { typed.textContent = SCRIPT[0][0]; typedOut.textContent = SCRIPT[0][1]; return; }
+    for (let n = 0; ; n++) {
+      const [cmd, res] = SCRIPT[n % SCRIPT.length];
+      while (!homeVisible()) await sleep(700);
+      typed.textContent = ""; typedOut.textContent = "";
+      for (const ch of cmd) { typed.textContent += ch; await sleep(70 + Math.random() * 60); }
+      await sleep(350); typedOut.textContent = res; await sleep(2800);
+    }
+  })();
+
+  /* skills: marquee of real tags */
+  const chips = $$("#skills .tags li").map((l) => `<span>${esc(l.textContent.trim())}</span>`).join("");
+  $("#ph-marq").innerHTML = chips + chips;
+
+  /* small tiles: one line from the real content */
+  const sub = (sel, fb) => (($(sel) || {}).textContent || fb).trim();
+  $("#ph-s-exp").textContent = sub("#experience h3", "Internship");
+  $("#ph-s-edu").textContent = sub("#education .card h3", "VIT Chennai");
+  $("#ph-s-res").textContent = sub("#research h3", "Publication");
+
   DOCK.forEach((d) => {
     const app = d.app && APPS.find((x) => x.id === d.app);
     const a = el("a", "", `<i class="${d.icon}"></i>${app && app.badge && !seenBadge ? '<em class="ph-badge">1</em>' : ""}`);
@@ -272,7 +323,6 @@
   }
 
   /* ---------- App sheets (expand from the icon, swipe down to close) ---------- */
-  let current = null;
   function geom(icon) {
     const r = icon.getBoundingClientRect(), vw = phone.clientWidth, vh = phone.clientHeight;
     return `translate(${r.left}px, ${r.top}px) scale(${r.width / vw}, ${r.height / vh})`;
