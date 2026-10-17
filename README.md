@@ -17,3 +17,8 @@ Screens up to 768px wide get a separate phone-style home screen (lock screen, ap
 The lock and home screens share one dark-tech 3D wallpaper (`phone-wall.js`, Three.js r128 from cdnjs, loaded on phones only): a neural core, gyro rings, an orbiting 3D microchip and floating shards. It reacts to touch, device tilt and scrolling, and falls back to a CSS grid wallpaper if WebGL is unavailable. The lock screen has a live analog clock.
 Desktop keeps the original layout and `script.js`. The phone version reads its content from the hidden desktop markup, so edit text in `index.html` only.
 A visitor on a phone can tap "Open desktop version" at the bottom of the home screen to see the classic layout.
+
+## Phone wallpaper
+- Connected-dots network (2D canvas, `initNet` block in `mobile.js`): tune `LINK` (line distance) and the node count formula.
+- 3D neural core (`phone-wall.js` + Three.js) is skipped on phones with Data Saver on or 4 GB RAM or less.
+- `avatar.webp` replaced `avatar.png` (delete the old PNG from the repo if it is still there).

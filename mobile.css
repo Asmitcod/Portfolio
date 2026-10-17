@@ -13,6 +13,7 @@ html.phone-mode body > *:not(#phone):not(script) { display: none !important; }
 /* ---------- Wallpaper: ONE black-tech layer shared by lock + home ---------- */
 .ph-wall { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: #030304; }
 .ph-wall__base { position: absolute; inset: 0; background: radial-gradient(80% 50% at 85% -5%, rgba(255, 255, 255, .06), transparent 60%), linear-gradient(180deg, #050506, #09090c 60%, #030304); }
+.ph-wall__net { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .ph-wall__cv { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.4s ease; }
 .ph-wall__cv.on { opacity: 1; }
 
@@ -52,12 +53,6 @@ html.phone-mode body > *:not(#phone):not(script) { display: none !important; }
 .ph-lock__stage { flex: 1 1 0; min-height: 70px; width: 100%; pointer-events: none; }
 
 .ph-skip { position: absolute; top: calc(var(--safe-t) + 14px); right: 16px; padding: .35rem .9rem; font-size: .75rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .12) !important; background: rgba(255, 255, 255, .05) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
-.ph-notif { width: 100%; display: flex; gap: .8rem; align-items: center; padding: .8rem 1rem; border-radius: 20px; background: rgba(255, 255, 255, .05); -webkit-backdrop-filter: blur(16px) saturate(140%); backdrop-filter: blur(16px) saturate(140%); border: 1px solid rgba(255, 255, 255, .10); box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .06); animation: phSlideIn .7s .5s both cubic-bezier(.2, .7, .2, 1); }
-.ph-notif img { width: 40px; height: 40px; border-radius: 12px; object-fit: cover; background: #15161a; }
-.ph-notif b { font-size: .88rem; } .ph-notif small { margin-left: .5rem; opacity: .6; font-size: .7rem; }
-.ph-notif p { font-size: .8rem; opacity: .9; line-height: 1.35; }
-.ph-lock__hint { margin-top: 1rem; font: 500 .7rem "JetBrains Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: #aeb3bd; opacity: .8; text-align: center; animation: phBob 1.8s ease-in-out infinite; }
-.ph-lock__hint i { display: block; font-size: 1rem; margin-bottom: .2rem; }
 @keyframes phSlideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
 @keyframes phBob { 50% { transform: translateY(-7px); } }
 
@@ -87,12 +82,7 @@ html.phone-mode body > *:not(#phone):not(script) { display: none !important; }
 .ph-flip img + img { transform: rotateY(180deg); object-fit: contain; object-position: 50% 100%; padding-top: 5%; background: radial-gradient(circle at 50% 30%, #2a2d35, #0b0c0f 75%); }
 .ph-profile h2 { font-size: 1.15rem; line-height: 1.2; }
 .ph-profile p { font-size: .78rem; color: var(--muted); margin-top: 2px; line-height: 1.35; }
-.ph-profile small { display: block; margin-top: 6px; font: 500 .68rem "JetBrains Mono", monospace; letter-spacing: .02em; color: #00e5ff; }
 .ph-theme { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .08) !important; font-size: .8rem; }
-.ph-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-.ph-stat { padding: 10px 14px; }
-.ph-stat b { display: block; font-size: 1.35rem; line-height: 1.1; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.ph-stat span { font-size: .72rem; color: var(--muted); line-height: 1.3; display: block; margin-top: 2px; }
 
 .ph-label { display: flex; align-items: center; gap: .7rem; margin: 2px 4px 12px; font: 500 .66rem "JetBrains Mono", monospace; letter-spacing: .22em; color: #9aa0ab; }
 .ph-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, .25), transparent); }
@@ -117,7 +107,6 @@ html.phone-mode body > *:not(#phone):not(script) { display: none !important; }
 
 /* entrance: widgets + icons pop in as the lock screen lifts */
 .ph-home.ph-in .ph-widget, .ph-home.ph-in .ph-search { animation: phRise .6s both cubic-bezier(.2, .8, .2, 1); }
-.ph-home.ph-in .ph-stats .ph-widget:nth-child(2) { animation-delay: .08s; }
 .ph-home.ph-in .ph-app { animation: phPopIn .55s calc(.12s + var(--i, 0) * .045s) both cubic-bezier(.3, 1.4, .5, 1); }
 .ph-home.ph-in .ph-dock { animation: phRise .6s .3s both cubic-bezier(.2, .8, .2, 1); }
 @keyframes phRise { from { opacity: 0; transform: translateY(26px); } }
@@ -195,3 +184,10 @@ html.phone-mode body > *:not(#phone):not(script) { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   #phone *, #phone *::before, #phone *::after { animation: none !important; transition-duration: .01ms !important; }
 }
+/* lock hint: three animated chevrons + one calm line of text */
+.ph-lock__hint { margin-top: .5rem; display: flex; flex-direction: column; align-items: center; gap: .6rem; font: 500 .7rem "JetBrains Mono", monospace; letter-spacing: .2em; text-transform: uppercase; color: #aeb3bd; text-align: center; }
+.ph-chev { position: relative; display: block; width: 18px; height: 22px; }
+.ph-chev i { position: absolute; left: 50%; width: 9px; height: 9px; margin-left: -4.5px; border-top: 1.6px solid #8db8ff; border-left: 1.6px solid #8db8ff; transform: rotate(45deg); opacity: 0; animation: phChev 1.8s ease-in-out infinite; }
+.ph-chev i:nth-child(1) { top: 11px; } .ph-chev i:nth-child(2) { top: 6px; animation-delay: .22s; } .ph-chev i:nth-child(3) { top: 1px; animation-delay: .44s; }
+@keyframes phChev { 0% { opacity: 0; transform: translateY(6px) rotate(45deg); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-4px) rotate(45deg); } }
+.ph-dock a { position: relative; }

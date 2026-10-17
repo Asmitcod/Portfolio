@@ -51,13 +51,13 @@
     { id: "gallery", name: "Gallery", icon: "fas fa-image", g: ["#ff9966", "#ff5e62"], build: buildGallery },
     { id: "github", name: "GitHub", icon: "fab fa-github", g: ["#2b2f36", "#4b5058"], build: buildGithub },
     { id: "terminal", name: "Terminal", icon: "fas fa-terminal", g: ["#0f2027", "#2c5364"], build: buildTerminal, cls: "ph-sheet--term" },
-    { id: "contact", name: "Contact", icon: "fas fa-envelope", g: ["#43cea2", "#185a9d"], build: buildContact, badge: true },
+    { id: "contact", name: "Contact", icon: "fas fa-envelope", g: ["#43cea2", "#185a9d"], build: buildContact, badge: true, dock: true },
   ];
   const DOCK = [
     { icon: "fas fa-file-lines", href: RESUME, g: ["#5c8eff", "#7b5cff"], label: "Resume" },
     { icon: "fab fa-github", href: GITHUB, g: ["#2b2f36", "#4b5058"], label: "GitHub" },
     { icon: "fab fa-linkedin-in", href: LINKEDIN, g: ["#0a66c2", "#2d8de6"], label: "LinkedIn" },
-    { icon: "fas fa-envelope", href: "mailto:" + EMAIL, g: ["#43cea2", "#185a9d"], label: "Email" },
+    { icon: "fas fa-envelope", app: "contact", g: ["#43cea2", "#185a9d"], label: "Contact" },
   ];
 
   const dateLine = () => new Date().toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric" }).replace(",", " \u00b7").toUpperCase();
@@ -86,6 +86,7 @@
       <div class="ph-wall__data ph-wall__data--l"><pre></pre></div>
       <div class="ph-wall__data ph-wall__data--r"><pre></pre></div>
       <div class="ph-wall__floor"><i></i></div>
+      <canvas class="ph-wall__net" id="ph-net"></canvas>
       <canvas class="ph-wall__cv" id="ph-cv"></canvas>
       <div class="ph-wall__sweep"></div>
       <div class="ph-wall__scan"></div>
@@ -96,13 +97,9 @@
       <div class="ph-scroll">
         <label class="ph-search"><i class="fas fa-magnifying-glass"></i><input id="ph-q" type="search" placeholder="Search apps" autocomplete="off" enterkeyhint="search" /></label>
         <div class="ph-widget ph-profile">
-          <div class="ph-flip" id="ph-flip" role="button" aria-label="Flip photo"><div class="ph-flip__inner"><img src="as.png" alt="Asmit Bisht" /><img src="avatar.png" alt="Minecraft avatar" loading="lazy" /></div></div>
-          <div><h2>Asmit Bisht</h2><p>CS (AI &amp; Robotics)<br />VIT Chennai</p><small>&gt; tap photo to flip_</small></div>
+          <div class="ph-flip" id="ph-flip" role="button" aria-label="Flip photo"><div class="ph-flip__inner"><img src="as.png" alt="Asmit Bisht" /><img src="avatar.webp" alt="Minecraft avatar" loading="lazy" /></div></div>
+          <div><h2>Asmit Bisht</h2><p>CS (AI &amp; Robotics)<br />VIT Chennai</p></div>
           <button class="ph-theme" aria-label="Toggle theme"></button>
-        </div>
-        <div class="ph-stats">
-          <div class="ph-widget ph-stat"><b>Top 100</b><span>of 864 teams<br />Smart India Hackathon '25</span></div>
-          <div class="ph-widget ph-stat"><b>Top 65</b><span>nationally<br />Devshouse '25</span></div>
         </div>
         <div class="ph-label"><span>// apps</span></div>
         <div class="ph-grid" id="ph-grid"></div>
@@ -117,8 +114,7 @@
       <div class="ph-aclock" id="ph-aclock">${clockSVG()}</div>
       <div class="ph-lock__digi" id="ph-digi"></div>
       <div class="ph-lock__stage" id="ph-stage"></div>
-      <div class="ph-notif"><img src="avatar.png" alt="" /><div><b>Asmit Bisht</b><small>now</small><p>Portfolio ready. Swipe up to open.</p></div></div>
-      <div class="ph-lock__hint"><i class="fas fa-chevron-up"></i>Swipe up to open</div>
+      <div class="ph-lock__hint"><span class="ph-chev"><i></i><i></i><i></i></span>Swipe up to see portfolio</div>
     </section>`;
   document.body.appendChild(phone);
   applyTheme(theme);
@@ -133,17 +129,74 @@
     const W = phone.clientWidth, H = phone.clientHeight;
     if (mode === "lock") {
       const r = $("#ph-stage").getBoundingClientRect(), pr = phone.getBoundingClientRect();
-      return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(76, Math.min(r.height * 0.58, W * 0.4)), dim: 1 };
+      return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(70, Math.min(r.height * 0.52, W * 0.36)), dim: 1 };
     }
-    return { cx: W / 2, cy: H * 0.46, r: W * 0.52, dim: 0.5 };
+    return { cx: W / 2, cy: H * 0.46, r: W * 0.47, dim: 0.5 };
   };
   const loadScript = (src) => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.async = false; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   const bootWall = () => {
     wall = window.PhoneWall ? window.PhoneWall.init($("#ph-cv"), { layout: wallLayout }) : null;
     if (wall) { wall.setMode(ss.get("ph-unlocked") ? "home" : "lock"); setTimeout(() => wall && wall.refresh(), 700); }
   };
-  (window.THREE ? Promise.resolve() : loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"))
+  /* low-power phones (data saver, or 4 GB RAM or less) skip the 3D scene and keep the light 2D wallpaper */
+  const lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory <= 4));
+  (lite ? Promise.reject(new Error("lite")) : window.THREE ? Promise.resolve() : loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"))
     .then(() => loadScript("phone-wall.js")).then(bootWall).catch(() => { /* no WebGL / offline: the CSS wallpaper stays */ });
+
+  /* ---------- Connected dots: a light 2D network behind the 3D core ---------- */
+  const net = (() => {
+    const cv = $("#ph-net"); if (!cv) return null;
+    const g = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const LINK = 130, FRAME = lite ? 42 : 33;
+    let W = 0, H = 0, nodes = [], pulses = [], raf = 0, paused = false, last = 0, nextPulse = 900, dimV = 1, pt = null;
+    const make = () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .26, vy: (Math.random() - .5) * .26, r: .7 + Math.random() * 1.1 });
+    function draw(dt) {
+      const k = dt / 16.7, links = [];
+      g.clearRect(0, 0, W, H);
+      nodes.forEach((n) => {
+        n.x += n.vx * k; n.y += n.vy * k;
+        if (pt) { const dx = pt.x - n.x, dy = pt.y - n.y, d = Math.hypot(dx, dy); if (d < 120 && d > 1) { n.x += dx * .004 * k; n.y += dy * .004 * k; } }
+        if (n.x < -20) n.x = W + 20; else if (n.x > W + 20) n.x = -20;
+        if (n.y < -20) n.y = H + 20; else if (n.y > H + 20) n.y = -20;
+      });
+      g.lineWidth = .8;
+      for (let i = 0; i < nodes.length; i++) for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK) { links.push([a, b]); g.strokeStyle = `rgba(77,141,255,${((1 - d / LINK) * .5 * dimV).toFixed(3)})`; g.beginPath(); g.moveTo(a.x, a.y); g.lineTo(b.x, b.y); g.stroke(); }
+      }
+      if (pt) nodes.forEach((n) => { const d = Math.hypot(pt.x - n.x, pt.y - n.y); if (d < 150) { g.strokeStyle = `rgba(150,195,255,${((1 - d / 150) * .5 * dimV).toFixed(3)})`; g.beginPath(); g.moveTo(n.x, n.y); g.lineTo(pt.x, pt.y); g.stroke(); } });
+      nodes.forEach((n, i) => {
+        if (i % 6 === 0) { g.fillStyle = `rgba(77,141,255,${(.1 * dimV).toFixed(3)})`; g.beginPath(); g.arc(n.x, n.y, n.r * 5, 0, 6.283); g.fill(); }
+        g.fillStyle = `rgba(140,185,255,${(.8 * dimV).toFixed(3)})`; g.beginPath(); g.arc(n.x, n.y, i % 6 === 0 ? n.r * 1.5 : n.r, 0, 6.283); g.fill();
+      });
+      if (!still && dt > 0) {
+        nextPulse -= dt;
+        if (nextPulse <= 0 && links.length && pulses.length < 3) { const l = links[(Math.random() * links.length) | 0]; pulses.push({ a: l[0], b: l[1], t: 0, sp: .0011 + Math.random() * .0008 }); nextPulse = 700 + Math.random() * 1100; }
+        pulses = pulses.filter((p) => (p.t += p.sp * dt) < 1 && Math.hypot(p.a.x - p.b.x, p.a.y - p.b.y) < LINK * 1.2);
+        pulses.forEach((p) => {
+          const at = (t) => [p.a.x + (p.b.x - p.a.x) * t, p.a.y + (p.b.y - p.a.y) * t], h = at(p.t), tl = at(Math.max(0, p.t - .2));
+          g.strokeStyle = `rgba(190,220,255,${(.85 * dimV).toFixed(3)})`; g.lineWidth = 1.3; g.beginPath(); g.moveTo(tl[0], tl[1]); g.lineTo(h[0], h[1]); g.stroke();
+          g.fillStyle = `rgba(77,141,255,${(.2 * dimV).toFixed(3)})`; g.beginPath(); g.arc(h[0], h[1], 6, 0, 6.283); g.fill();
+          g.fillStyle = "#e6f1ff"; g.beginPath(); g.arc(h[0], h[1], 1.8, 0, 6.283); g.fill();
+        });
+      }
+    }
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2); W = phone.clientWidth; H = phone.clientHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0);
+      nodes = Array.from({ length: Math.round(Math.min(lite ? 26 : 34, (W * H) / 10500)) }, make); pulses = [];
+      draw(0);
+    }
+    function frame(t) { raf = requestAnimationFrame(frame); if (t - last < FRAME) return; const dt = Math.min(last ? t - last : FRAME, 80); last = t; draw(dt); }
+    const start = () => { if (!raf && !paused && !document.hidden && !still) { last = 0; raf = requestAnimationFrame(frame); } };
+    const stop = () => { cancelAnimationFrame(raf); raf = 0; };
+    document.addEventListener("visibilitychange", () => (document.hidden ? stop() : start()));
+    phone.addEventListener("pointermove", (e) => { pt = { x: e.clientX, y: e.clientY }; }, { passive: true });
+    ["pointerup", "pointercancel", "pointerleave"].forEach((ev) => phone.addEventListener(ev, () => { pt = null; }));
+    window.addEventListener("resize", resize);
+    resize(); start();
+    return { pause(p) { paused = p; p ? stop() : start(); }, dim(v) { dimV = v; if (still || paused) draw(0); } };
+  })();
 
   /* ---------- Analog clock (smooth sweeping second hand) ---------- */
   const C136 = 2 * Math.PI * 140;
@@ -170,6 +223,7 @@
   const grid = $("#ph-grid");
   const seenBadge = ss.get("ph-badge-seen");
   APPS.forEach((app, idx) => {
+    if (app.dock) return;
     const b = el("button", "ph-app"); b.style.setProperty("--i", idx);
     b.style.setProperty("--g1", app.g[0]); b.style.setProperty("--g2", app.g[1]);
     b.innerHTML = `<div class="ph-ico"><i class="${app.icon}"></i>${app.badge && !seenBadge ? '<em class="ph-badge">1</em>' : ""}</div><span>${app.name}</span>`;
@@ -179,15 +233,16 @@
   const empty = el("div", "ph-empty", "No apps match your search."); empty.hidden = true; grid.appendChild(empty);
   $("#ph-q").addEventListener("input", (e) => {
     const q = e.target.value.trim().toLowerCase(); let n = 0;
-    APPS.forEach((a) => { const ok = !q || a.name.toLowerCase().includes(q) || a.id.includes(q); a.node.hidden = !ok; if (ok) n++; });
+    APPS.forEach((a) => { if (!a.node) return; const ok = !q || a.name.toLowerCase().includes(q) || a.id.includes(q); a.node.hidden = !ok; if (ok) n++; });
     empty.hidden = n > 0;
   });
   DOCK.forEach((d) => {
-    const a = el("a", "", `<i class="${d.icon}"></i>`);
-    a.href = d.href; a.setAttribute("aria-label", d.label);
-    if (!d.href.startsWith("mailto:")) { a.target = "_blank"; a.rel = "noopener"; }
+    const app = d.app && APPS.find((x) => x.id === d.app);
+    const a = el("a", "", `<i class="${d.icon}"></i>${app && app.badge && !seenBadge ? '<em class="ph-badge">1</em>' : ""}`);
+    a.setAttribute("aria-label", d.label);
     a.style.setProperty("--g1", d.g[0]); a.style.setProperty("--g2", d.g[1]);
-    a.addEventListener("click", () => buzz(8));
+    if (app) { a.href = "#"; a.setAttribute("role", "button"); a.addEventListener("click", (e) => { e.preventDefault(); openApp(app, a); }); }
+    else { a.href = d.href; a.target = "_blank"; a.rel = "noopener"; a.addEventListener("click", () => buzz(8)); }
     $("#ph-dock").appendChild(a);
   });
   $("#ph-flip").addEventListener("click", (e) => { e.currentTarget.classList.toggle("on"); buzz(14); });
@@ -203,9 +258,10 @@
     buzz(18); ss.set("ph-unlocked", "1"); lock.style.transform = ""; lock.classList.add("up");
     $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in");
     if (wall) { wall.setMode("home"); wall.kick(1.6); }
+    if (net) net.dim(.55);
     setTimeout(() => { lock.style.display = "none"; stopClock(); }, 550);
   };
-  if (ss.get("ph-unlocked")) { lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); }
+  if (ss.get("ph-unlocked")) { if (net) net.dim(.55); lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); }
   else {
     let sy = null, dy = 0, moved = false;
     lock.addEventListener("pointerdown", (e) => { if (e.target.closest(".ph-skip")) return; sy = e.clientY; dy = 0; moved = false; lock.style.transition = "none"; });
@@ -235,7 +291,7 @@
     sheet.style.transition = "transform .42s cubic-bezier(.2,.8,.2,1), opacity .3s, border-radius .42s";
     sheet.style.transform = "none"; sheet.style.opacity = "1"; sheet.style.borderRadius = "0";
     current = { sheet, icon };
-    setTimeout(() => { if (current && wall) wall.pause(true); }, 480);
+    setTimeout(() => { if (current) { if (wall) wall.pause(true); if (net) net.pause(true); } }, 480);
     try { history.pushState({ ph: app.id }, ""); } catch (e) {}
     $(".ph-back", sheet).addEventListener("click", () => closeApp());
     swipeDown(sheet, bodyEl);
@@ -244,6 +300,7 @@
     if (!current) return;
     const { sheet, icon } = current; current = null; buzz(8);
     if (wall) wall.pause(false);
+    if (net) net.pause(false);
     sheet.style.transition = "transform .36s cubic-bezier(.4,0,.2,1), opacity .3s, border-radius .36s";
     sheet.style.transform = geom(icon); sheet.style.opacity = "0"; sheet.style.borderRadius = "24px";
     setTimeout(() => sheet.remove(), 380);
