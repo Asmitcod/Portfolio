@@ -28,6 +28,6 @@ A visitor on a phone can tap "Open desktop version" at the bottom of the home sc
 Phones get a separate "phone OS" experience from `mobile.css`, `mobile.js` and `phone-wall.js`. The desktop site is untouched.
 
 - **Lock screen:** black with the blue connected-dots network (same as desktop), one hero (a 3D neural core with an orbiting microchip), a small analog clock with a sweeping second hand, swipe up to unlock.
-- **Home screen:** a bento of live widgets over the same wallpaper: rotating projects (read from the page) with Gallery / Experience / Education / Research stacked beside it, a terminal that types real commands, a skills marquee, and Top 100 + newest GitHub repo side by side. Tiles open full apps. The dock holds Resume, GitHub, LinkedIn and Contact.
+- **Home screen:** a bento of live widgets over the same wallpaper: rotating projects (read from the page) with Gallery / Experience / Education / Research stacked beside it, a terminal that types real commands, a skills marquee, and Top 100 (animated ring) + newest GitHub repo (push-activity sparkline) side by side. The glass has a light sheen that follows touch or phone tilt. Tiles open full apps. The dock holds Resume, GitHub, LinkedIn and Contact.
 - **3D:** Three.js r128 from cdnjs, loaded only on phones. Reacts to touch, device tilt and scrolling. Skipped on data-saver or phones under 4 GB RAM (a CSS orb is shown instead), and when WebGL is unavailable.
 - `phone-wall.js` must be deployed next to `index.html`.

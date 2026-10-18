@@ -97,15 +97,15 @@
             <div class="ph-t-profile__txt"><span class="ph-eyebrow">// hello, world</span><h2>Asmit Bisht</h2><p>CS (AI &amp; Robotics) \u00b7 VIT Chennai</p><span class="ph-loc"><i></i><b id="ph-loc"></b></span></div>
             <button class="ph-theme" aria-label="Toggle theme"></button>
           </div>
-          <button class="ph-tile ph-t-projects" data-app="projects"><span class="ph-eyebrow"><i class="fas fa-diagram-project"></i> Projects</span><div class="ph-rot" id="ph-rot"></div><div class="ph-rot__dots" id="ph-rotdots"></div></button>
-          <button class="ph-tile ph-t-sm ph-t-gal" data-app="gallery"><span class="ph-sm__ic"><i class="fas fa-image"></i></span><span class="ph-sm__t"><b>Gallery</b><small>5 photos</small></span></button>
-          <button class="ph-tile ph-t-sm" data-app="experience"><span class="ph-sm__ic"><i class="fas fa-briefcase"></i></span><span class="ph-sm__t"><b>Experience</b><small id="ph-s-exp"></small></span></button>
-          <button class="ph-tile ph-t-sm" data-app="education"><span class="ph-sm__ic"><i class="fas fa-graduation-cap"></i></span><span class="ph-sm__t"><b>Education</b><small id="ph-s-edu"></small></span></button>
-          <button class="ph-tile ph-t-sm" data-app="research"><span class="ph-sm__ic"><i class="fas fa-microscope"></i></span><span class="ph-sm__t"><b>Research</b><small id="ph-s-res"></small></span></button>
-          <button class="ph-tile ph-t-term" data-app="terminal"><span class="ph-eyebrow"><i class="fas fa-terminal"></i> Terminal</span><div class="ph-tm"><span class="ph-tm__p">visitor@asmit:~$</span> <span id="ph-typed"></span><i class="ph-caret"></i></div><div class="ph-tm__out" id="ph-typed-out"></div></button>
+          <button class="ph-tile ph-t-projects" data-app="projects"><span class="ph-eyebrow"><i class="fas fa-diagram-project"></i> Projects<em class="ph-idx" id="ph-idx"></em></span><div class="ph-rot" id="ph-rot"></div><div class="ph-rot__dots" id="ph-rotdots"></div></button>
+          <button class="ph-tile ph-t-sm ph-t-gal" style="--c:#ff9966" data-app="gallery"><span class="ph-sm__ic"><i class="fas fa-image"></i></span><span class="ph-sm__t"><b>Gallery</b><small>5 photos</small></span></button>
+          <button class="ph-tile ph-t-sm" style="--c:#ffb454" data-app="experience"><span class="ph-sm__ic"><i class="fas fa-briefcase"></i></span><span class="ph-sm__t"><b>Experience</b><small id="ph-s-exp"></small></span></button>
+          <button class="ph-tile ph-t-sm" style="--c:#3ddc97" data-app="education"><span class="ph-sm__ic"><i class="fas fa-graduation-cap"></i></span><span class="ph-sm__t"><b>Education</b><small id="ph-s-edu"></small></span></button>
+          <button class="ph-tile ph-t-sm" style="--c:#a78bff" data-app="research"><span class="ph-sm__ic"><i class="fas fa-microscope"></i></span><span class="ph-sm__t"><b>Research</b><small id="ph-s-res"></small></span></button>
+          <button class="ph-tile ph-t-term" data-app="terminal"><span class="ph-eyebrow"><i class="fas fa-terminal"></i> Terminal</span><div class="ph-tm__log" id="ph-tm-log"></div><div class="ph-tm"><span class="ph-tm__p">visitor@asmit:~$</span> <span id="ph-typed"></span><i class="ph-caret"></i></div><div class="ph-tm__out" id="ph-typed-out"></div></button>
           <button class="ph-tile ph-t-skills" data-app="skills"><div class="ph-marq"><div class="ph-marq__in" id="ph-marq"></div></div></button>
-          <button class="ph-tile ph-t-awards" data-app="awards"><span class="ph-eyebrow"><i class="fas fa-trophy"></i> Awards</span><b class="ph-big">Top 100</b><span class="ph-sub">864 teams \u00b7 SIH '25</span></button>
-          <button class="ph-tile ph-t-gh" data-app="github"><span class="ph-eyebrow"><i class="fab fa-github"></i> GitHub<em class="ph-livedot"></em></span><b class="ph-gh__name" id="ph-gh-name">Asmitcod</b><span class="ph-sub" id="ph-gh-sub">latest repos</span></button>
+          <button class="ph-tile ph-t-awards" data-app="awards"><span class="ph-eyebrow"><i class="fas fa-trophy"></i> Awards</span><svg class="ph-ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="t" cx="32" cy="32" r="26"/><circle class="a" id="ph-ring-a" cx="32" cy="32" r="26"/></svg><b class="ph-big">Top <span id="ph-n">100</span></b><span class="ph-sub">864 teams \u00b7 SIH '25</span></button>
+          <button class="ph-tile ph-t-gh" data-app="github"><span class="ph-eyebrow"><i class="fab fa-github"></i> GitHub<em class="ph-livedot"></em></span><div class="ph-spark" id="ph-spark"><i></i><i></i><i></i><i></i><i></i><i></i></div><b class="ph-gh__name" id="ph-gh-name">Asmitcod</b><span class="ph-sub" id="ph-gh-sub">latest repos</span></button>
         </div>
         <div class="ph-foot"><button id="ph-desktop">Open desktop version</button></div>
       </div>
@@ -131,7 +131,7 @@
       const r = $("#ph-stage").getBoundingClientRect(), pr = phone.getBoundingClientRect();
       return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(90, Math.min(r.height * 0.6, W * 0.44)), dim: 1 };
     }
-    return { cx: W / 2, cy: H * 0.42, r: W * 0.62, dim: 0.6 };
+    return { cx: W / 2, cy: H * 0.42, r: W * 0.42, dim: 0.35 };
   };
   const loadScript = (src) => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.async = false; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   const bootWall = () => {
@@ -237,10 +237,12 @@
   setLoc(); setInterval(setLoc, 20000);
 
   /* projects: rotating cards read from the desktop markup */
+  const ACC = ["#00e5ff", "#a78bff", "#3ddc97", "#ffb454", "#ff7a90"];
   const projs = $$("#projects .project").map((p) => ({ t: ($("h3", p) || {}).textContent || "", d: ($("p", p) || {}).textContent || "" })).filter((p) => p.t);
   const rotEl = $("#ph-rot"), rotDots = $("#ph-rotdots"); let pi = 0;
   const showProj = (i) => {
-    const p = projs[i]; rotEl.classList.remove("in"); rotEl.innerHTML = `<h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>`; void rotEl.offsetWidth; rotEl.classList.add("in");
+    const p = projs[i]; rotEl.classList.remove("in");
+    $(".ph-t-projects").style.setProperty("--acc", ACC[i % ACC.length]); $("#ph-idx").textContent = `${pad(i + 1)} / ${pad(projs.length)}`; rotEl.innerHTML = `<h3>${esc(p.t)}</h3><p>${esc(p.d)}</p>`; void rotEl.offsetWidth; rotEl.classList.add("in");
     $$("i", rotDots).forEach((d, k) => d.classList.toggle("on", k === i));
   };
   if (projs.length) {
@@ -257,6 +259,10 @@
         const r = await fetch("https://api.github.com/users/Asmitcod/repos?sort=pushed&per_page=12", { headers: { Accept: "application/vnd.github+json" } });
         if (!r.ok) throw new Error("gh"); repos = await r.json(); ss.set(key, JSON.stringify(repos));
       }
+      const months = [0, 0, 0, 0, 0, 0];
+      repos.forEach((r) => { const m = Math.floor((Date.now() - new Date(r.pushed_at)) / (30 * 864e5)); if (m >= 0 && m < 6) months[5 - m]++; });
+      const mx = Math.max(1, ...months);
+      $$("#ph-spark i").forEach((b, k) => (b.style.height = `${18 + (months[k] / mx) * 82}%`));
       const top = repos.filter((r) => !r.fork && r.name.toLowerCase() !== "asmitcod")[0]; if (!top) return;
       $("#ph-gh-name").textContent = top.name; $("#ph-gh-sub").textContent = `${top.language || "code"} \u00b7 ${ago(top.pushed_at)}`;
       $(".ph-t-gh").classList.add("is-live");
@@ -266,6 +272,7 @@
   /* terminal: types a few real commands */
   const typed = $("#ph-typed"), typedOut = $("#ph-typed-out");
   const SCRIPT = [["whoami", "asmit bisht"], ["ls skills/", "python  java  c++  sql  ros"], ["ls projects/", "traffic-rl  aquajeevan  edumadad  aqi-monitor"]];
+  const hist = [];
   (async () => {
     if (reduceMotion) { typed.textContent = SCRIPT[0][0]; typedOut.textContent = SCRIPT[0][1]; return; }
     for (let n = 0; ; n++) {
@@ -274,8 +281,32 @@
       typed.textContent = ""; typedOut.textContent = "";
       for (const ch of cmd) { typed.textContent += ch; await sleep(70 + Math.random() * 60); }
       await sleep(350); typedOut.textContent = res; await sleep(2800);
+      hist.push([cmd, res]); $("#ph-tm-log").innerHTML = hist.slice(-2).map((h, k, a) => `<div class="h" style="opacity:${k === a.length - 1 ? .6 : .32}"><span class="ph-tm__p">$</span> ${esc(h[0])} <em>\u2192 ${esc(h[1])}</em></div>`).join("");
     }
   })();
+
+  /* awards: ring fills + number counts up when the home screen appears */
+  const awardsIn = () => {
+    const n = $("#ph-n"); $("#ph-ring-a").classList.add("on");
+    if (reduceMotion) return;
+    const t0 = performance.now();
+    const step = (now) => { const p = Math.min(1, (now - t0) / 1300); n.textContent = Math.round(100 * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    n.textContent = "0"; setTimeout(() => requestAnimationFrame(step), 450);
+  };
+
+  /* light sheen on the glass: follows your finger, or the phone's tilt */
+  const tiles = $$("#ph-bento .ph-tile"); let sheenRaf = 0, shx = 0, shy = 0, sho = 0, touching = false;
+  const paintSheen = () => { sheenRaf = 0; if (!homeVisible()) return; tiles.forEach((t) => { const r = t.getBoundingClientRect(); t.style.setProperty("--sx", `${shx - r.left}px`); t.style.setProperty("--sy", `${shy - r.top}px`); t.style.setProperty("--so", sho); }); };
+  const sheenAt = (x, y, o) => { shx = x; shy = y; sho = o; if (!sheenRaf) sheenRaf = requestAnimationFrame(paintSheen); };
+  $(".ph-home").addEventListener("pointermove", (e) => { touching = true; sheenAt(e.clientX, e.clientY, 1); }, { passive: true });
+  ["pointerup", "pointercancel"].forEach((ev) => $(".ph-home").addEventListener(ev, () => { touching = false; sheenAt(shx, shy, 0); }, { passive: true }));
+  if ("DeviceOrientationEvent" in window && typeof window.DeviceOrientationEvent.requestPermission !== "function") {
+    window.addEventListener("deviceorientation", (e) => {
+      if (touching || e.gamma == null || e.beta == null) return;
+      const W = phone.clientWidth, H = phone.clientHeight;
+      sheenAt(W * (0.5 + Math.max(-1, Math.min(1, e.gamma / 35)) * 0.5), H * (0.4 + Math.max(-1, Math.min(1, (e.beta - 55) / 40)) * 0.5), 0.7);
+    }, { passive: true });
+  }
 
   /* skills: marquee of real tags */
   const chips = $$("#skills .tags li").map((l) => `<span>${esc(l.textContent.trim())}</span>`).join("");
@@ -307,12 +338,12 @@
   const unlock = () => {
     if (lock.classList.contains("up")) return;
     buzz(18); ss.set("ph-unlocked", "1"); lock.style.transform = ""; lock.classList.add("up");
-    $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in");
+    $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); awardsIn();
     if (wall) { wall.setMode("home"); wall.kick(1.6); }
     if (net) net.dim(.55);
     setTimeout(() => { lock.style.display = "none"; stopClock(); }, 550);
   };
-  if (ss.get("ph-unlocked")) { if (net) net.dim(.55); lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); }
+  if (ss.get("ph-unlocked")) { if (net) net.dim(.55); lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); awardsIn(); }
   else {
     let sy = null, dy = 0, moved = false;
     lock.addEventListener("pointerdown", (e) => { if (e.target.closest(".ph-skip")) return; sy = e.clientY; dy = 0; moved = false; lock.style.transition = "none"; });

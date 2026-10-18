@@ -78,6 +78,14 @@
     var halo = new T.Sprite(reg(new T.SpriteMaterial({ map: glow, color: 0x1a2230, blending: ADD, depthWrite: false }), 0.4));
     halo.scale.set(3.8, 3.8, 1); core.add(halo);
 
+    /* radar pings: thin rings that expand from the core and fade (depth + life) */
+    var scans = [];
+    for (i = 0; i < 2; i++) {
+      var scM = reg(new T.MeshBasicMaterial({ color: 0x00e5ff, side: T.DoubleSide, blending: ADD, depthWrite: false }), 0.4);
+      var sc = new T.Mesh(new T.RingGeometry(0.985, 1, 128), scM);
+      sc.rotation.x = 1.3; sc.userData.ph = i * 0.5; core.add(sc); scans.push(sc);
+    }
+
     /* data pulses racing along the core's edges */
     var ep = edges.attributes.position, segCount = Math.floor(ep.count / 2), N = 22;
     var pulseGeo = new T.BufferGeometry(), pulsePos = new Float32Array(N * 3);
@@ -174,6 +182,16 @@
     var moteMat = reg(new T.PointsMaterial({ color: 0xcfd6e0, size: 0.07, map: glow, blending: ADD, depthWrite: false }), 0.38);
     scene.add(new T.Points(moteGeo, moteMat));
 
+    /* soft bokeh lights close to the camera: cheap depth-of-field */
+    var bokeh = [];
+    for (i = 0; i < 7; i++) {
+      var bk = new T.Sprite(reg(new T.SpriteMaterial({ map: glow, color: 0xffffff, blending: ADD, depthWrite: false }), 0.05 + Math.random() * 0.05));
+      var bs = 0.5 + Math.random() * 0.9; bk.scale.set(bs, bs, 1);
+      bk.position.set((Math.random() - 0.5) * 3.2, (Math.random() - 0.5) * 6, 2 + Math.random() * 2.5);
+      bk.userData = { by: bk.position.y, ph: Math.random() * 6.28, sp: 0.15 + Math.random() * 0.2 };
+      scene.add(bk); bokeh.push(bk);
+    }
+
     /* ---------- layout / state ---------- */
     var W = 1, H = 1, U = 0.01;
     var mode = "lock";
@@ -228,6 +246,11 @@
       core.rotation.x = 0.28 + look.y * 0.4; core.rotation.y = look.x * 0.55;
       camera.position.x = look.x * 0.16; camera.position.y = -look.y * 0.16; camera.lookAt(0, 0, 0);
 
+      for (var sp = 0; sp < scans.length; sp++) {
+        var pr = (t * 0.26 + scans[sp].userData.ph) % 1;
+        scans[sp].scale.setScalar(1 + pr * 1.7); scans[sp].material.userData.base = 0.42 * (1 - pr) * (1 - pr);
+      }
+      for (var bq = 0; bq < bokeh.length; bq++) { var bd = bokeh[bq].userData; bokeh[bq].position.y = bd.by + Math.sin(t * bd.sp + bd.ph) * 0.4; }
       for (var f = 0; f < fade.length; f++) fade[f].opacity = fade[f].userData.base * cur.dim;
       for (f = 0; f < pts.length; f++) pts[f].m.size = pts[f].base * s * 1.0 + 0.012;
       moteMat.size = 0.055;
