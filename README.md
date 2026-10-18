@@ -20,7 +20,6 @@ A visitor on a phone can tap "Open desktop version" at the bottom of the home sc
 
 ## Phone wallpaper
 - Connected-dots network (2D canvas, `initNet` block in `mobile.js`): tune `LINK` (line distance) and the node count formula.
-- 3D neural core (`phone-wall.js` + Three.js) is skipped on phones with Data Saver on or 4 GB RAM or less.
 - `avatar.webp` replaced `avatar.png` (delete the old PNG from the repo if it is still there).
 
 ## Phone version (<= 768px wide)
@@ -31,3 +30,11 @@ Phones get a separate "phone OS" experience from `mobile.css`, `mobile.js` and `
 - **Home screen:** a bento of live widgets over the same wallpaper: rotating projects (read from the page) with Gallery / Experience / Education / Research stacked beside it, a terminal that types real commands, a skills marquee, and Top 100 (animated ring) + newest GitHub repo (push-activity sparkline) side by side. The glass has a light sheen that follows touch or phone tilt. Tiles open full apps. The dock holds Resume, GitHub, LinkedIn and Contact.
 - **3D:** Three.js r128 from cdnjs, loaded only on phones. Reacts to touch, device tilt and scrolling. Skipped on data-saver or phones under 4 GB RAM (a CSS orb is shown instead), and when WebGL is unavailable.
 - `phone-wall.js` must be deployed next to `index.html`.
+
+## Phone wallpaper: LIDAR scan (`phone-lidar.js`)
+A 2D canvas scene, no libraries (replaces the old Three.js core, so ~600 KB less to download on phones).
+A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls and every return becomes a point that flashes, settles and fades.
+- Floor plan: `WALLS`, `RECTS`, `CIRCLES`, `ROUTE` at the top of the file (coordinates are 0..1, stretched to fit).
+- Speed / density: `OMEGA` (beam speed), `DA` (angle between rays), `LIFE` (seconds a point stays), `N` (max points).
+- Low-power phones (Data Saver, or under 4 GB RAM) get fewer rays/points and a lower frame rate.
+- Tap anywhere in the scan area for a sonar ping; unlocking sends a pulse from the robot.

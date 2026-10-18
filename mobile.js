@@ -83,7 +83,6 @@
   phone.innerHTML = `
     <div class="ph-wall" id="ph-wall" aria-hidden="true">
       <div class="ph-wall__base"></div>
-      <div class="ph-wall__orb"><i></i><i></i><i></i></div>
       <canvas class="ph-wall__net" id="ph-net"></canvas>
       <canvas class="ph-wall__cv" id="ph-cv"></canvas>
       <div class="ph-wall__vig"></div>
@@ -123,33 +122,32 @@
   applyTheme(theme);
   setInterval(() => { $$(".ph-clock").forEach((c) => (c.textContent = clock())); const d = $("#ph-ldate"); if (d) d.textContent = dateLine(); }, 20000);
 
-  /* ---------- Wallpaper (one layer shared by lock + home) ---------- */
+  /* ---------- Wallpaper: LIDAR scan (one canvas shared by lock + home) ---------- */
   let wall = null;
   const wallLayout = (mode) => {
     const W = phone.clientWidth, H = phone.clientHeight;
-    if (mode === "lock") {
+    if (mode === "lock") {                       /* the "room" sits below the clock, above the swipe hint */
       const r = $("#ph-stage").getBoundingClientRect(), pr = phone.getBoundingClientRect();
-      return { cx: W / 2, cy: r.top - pr.top + r.height / 2, r: Math.max(90, Math.min(r.height * 0.6, W * 0.44)), dim: 1 };
+      const top = r.top - pr.top + 16, bottom = Math.min(H - 86, r.bottom - pr.top + 20);
+      return { x: W * 0.04, y: top, w: W * 0.92, h: Math.max(220, bottom - top), dim: 1 };
     }
-    return { cx: W / 2, cy: H * 0.42, r: W * 0.42, dim: 0.35 };
+    return { x: W * 0.03, y: H * 0.07, w: W * 0.94, h: H * 0.84, dim: 0.34 };   /* home: full-screen, dimmed behind the tiles */
   };
   const loadScript = (src) => new Promise((ok, no) => { const s = document.createElement("script"); s.src = src; s.async = false; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
-  const bootWall = () => {
-    wall = window.PhoneWall ? window.PhoneWall.init($("#ph-cv"), { layout: wallLayout }) : null;
-    if (wall) { wall.setMode(ss.get("ph-unlocked") ? "home" : "lock"); setTimeout(() => wall && wall.refresh(), 700); }
-    else $("#ph-wall").classList.add("no3d");
-  };
-  /* low-power phones (data saver, or under 4 GB RAM) skip the 3D scene and keep the CSS orb */
+  /* low-power phones (data saver, or under 4 GB RAM) get a lighter scan: one frame rate step down, fewer rays and points */
   const lite = !!((navigator.connection && navigator.connection.saveData) || (navigator.deviceMemory && navigator.deviceMemory < 4));
-  (lite ? Promise.reject(new Error("lite")) : window.THREE ? Promise.resolve() : loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"))
-    .then(() => loadScript("phone-wall.js")).then(bootWall).catch(() => { $("#ph-wall").classList.add("no3d"); /* no WebGL / offline / low-power: CSS orb */ });
+  loadScript("phone-lidar.js").then(() => {
+    wall = window.PhoneLidar.init($("#ph-cv"), { layout: wallLayout, events: phone, lite });
+    wall.setMode(ss.get("ph-unlocked") ? "home" : "lock");
+    setTimeout(() => wall && wall.refresh(), 700);
+  }).catch(() => {});
 
-  /* ---------- Connected dots: a light 2D network behind the 3D core ---------- */
+  /* ---------- Connected dots: a light 2D network behind the LIDAR scan ---------- */
   const net = (() => {
     const cv = $("#ph-net"); if (!cv) return null;
     const g = cv.getContext("2d"), still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const LINK = 130, FRAME = lite ? 42 : 33;
-    let W = 0, H = 0, nodes = [], pulses = [], raf = 0, paused = false, last = 0, nextPulse = 900, dimV = 1, pt = null;
+    let W = 0, H = 0, nodes = [], pulses = [], raf = 0, paused = false, last = 0, nextPulse = 900, dimV = .35, pt = null;
     const make = () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .26, vy: (Math.random() - .5) * .26, r: .7 + Math.random() * 1.1 });
     function draw(dt) {
       const k = dt / 16.7, links = [];
@@ -339,11 +337,11 @@
     if (lock.classList.contains("up")) return;
     buzz(18); ss.set("ph-unlocked", "1"); lock.style.transform = ""; lock.classList.add("up");
     $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); awardsIn();
-    if (wall) { wall.setMode("home"); wall.kick(1.6); }
-    if (net) net.dim(.55);
+    if (wall) { wall.setMode("home"); wall.pulse(); }
+    if (net) net.dim(.3);
     setTimeout(() => { lock.style.display = "none"; stopClock(); }, 550);
   };
-  if (ss.get("ph-unlocked")) { if (net) net.dim(.55); lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); awardsIn(); }
+  if (ss.get("ph-unlocked")) { if (net) net.dim(.3); lock.style.display = "none"; stopClock(); $(".ph-home").classList.remove("ph-hold"); $(".ph-home").classList.add("ph-in"); awardsIn(); }
   else {
     let sy = null, dy = 0, moved = false;
     lock.addEventListener("pointerdown", (e) => { if (e.target.closest(".ph-skip")) return; sy = e.clientY; dy = 0; moved = false; lock.style.transition = "none"; });
