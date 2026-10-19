@@ -111,11 +111,7 @@ LinkedIn: Connect with me
 
 Portfolio: Add your live portfolio URL here.
 
-<p align="center">
-  <b>Built with curiosity, engineered with purpose.</b>
-  <br/>
-  <sub>© Asmit Bisht · Personal Portfolio</sub>
-</p>
+
 
 Static portfolio site (HTML, CSS, vanilla JS). Open `index.html`, or run `python app.py` for the optional Flask server.
 
@@ -137,7 +133,6 @@ A visitor on a phone can tap "Open desktop version" at the bottom of the home sc
 
 ## Phone wallpaper
 - Connected-dots network (2D canvas, `initNet` block in `mobile.js`): tune `LINK` (line distance) and the node count formula.
-- `avatar.webp` replaced `avatar.png` (delete the old PNG from the repo if it is still there).
 
 ## Phone version (<= 768px wide)
 
@@ -161,3 +156,8 @@ A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls an
 - Fonts are self-hosted in `fonts/` (latin subset, variable woff2) and declared in `fonts.css`; there is no Google Fonts request any more. Inter + Space Grotesk are preloaded on desktop only.
 - `type.css` is scoped to `html:not(.phone-mode)`, so the phone UI (Poppins + JetBrains Mono) is untouched. Retune sizes/fonts by editing the `:root` tokens.
 - Tile gradients: each card sets `--acc` (r, g, b); the tint and the pill/tag/icon colours follow it. See the "tile gradients" block in `type.css`.
+<p align="center">
+  <b>Built with curiosity, engineered with purpose.</b>
+  <br/>
+  <sub>© Asmit Bisht · Personal Portfolio</sub>
+</p>
