@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Asmit Bisht - Computer Science (AI & Robotics) student at VIT Chennai. Python, SQL, Flask, Machine Learning." />
   <title>Asmit Bisht | Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 769px)" />
+  <link rel="preload" href="fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin media="(min-width: 769px)" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" referrerpolicy="no-referrer" />
   <script>
     /* Phone vs desktop switch: phones (<= 768px) get the phone home screen; desktop is unchanged. */
@@ -20,7 +19,9 @@
       if (narrow.addEventListener) narrow.addEventListener("change", reload); else if (narrow.addListener) narrow.addListener(reload);
     })();
   </script>
+  <link rel="stylesheet" href="fonts.css" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="type.css" />
   <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)" />
 </head>
 <body class="dark" id="top">
@@ -64,7 +65,7 @@
     <section class="hero" id="about">
       <div class="hero__text">
         <p class="hero__hello mono reveal">&lt;hello world /&gt;</p>
-        <h1 class="hero__title reveal">Hi, I'm <span class="grad" data-glitch="Asmit Bisht">Asmit Bisht</span></h1>
+        <h1 class="hero__title reveal">Hi, I&rsquo;m <span class="grad" data-glitch="Asmit Bisht">Asmit Bisht</span></h1>
         <h2 class="hero__role reveal">I build <span id="typed" class="typed"></span><span class="caret"></span></h2>
         <p class="hero__desc reveal">
           Final-year B.Tech Computer Science (AI &amp; Robotics) student at VIT Chennai.
@@ -77,9 +78,9 @@
           <a href="https://www.linkedin.com/in/asmit-bisht-a09682293" target="_blank" rel="noopener" class="social magnetic" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
         </div>
         <div class="stats reveal">
-          <div class="stat"><span class="stat__num" data-count="100">0</span><span class="stat__plus"></span><p>Top 100 of 864 teams<br />Smart India Hackathon '25</p></div>
-          <div class="stat"><span class="stat__num" data-count="65">0</span><span class="stat__plus"></span><p>Top 65 nationally<br />Devshouse '25</p></div>
-          <div class="stat"><span class="stat__num" data-count="4">0</span><span class="stat__plus">+</span><p>Projects<br />shipped</p></div>
+          <div class="stat"><div class="stat__row"><span class="stat__pre">Top</span><span class="stat__num" data-count="100">0</span></div><p>of 864 teams<br />Smart India Hackathon &rsquo;25</p></div>
+          <div class="stat"><div class="stat__row"><span class="stat__pre">Top</span><span class="stat__num" data-count="65">0</span></div><p>nationally<br />Devshouse &rsquo;25</p></div>
+          <div class="stat"><div class="stat__row"><span class="stat__num" data-count="4">0</span><span class="stat__plus">+</span></div><p>projects<br />shipped</p></div>
         </div>
       </div>
 
@@ -112,9 +113,9 @@
             <h3>Software Engineering Intern</h3>
             <p class="muted">Sankalp Sewa Sansthan &middot; Remote</p>
           </div>
-          <span class="pill">25 May 2025 - 20 Jun 2025</span>
+          <span class="pill">25 May 2025 &ndash; 20 Jun 2025</span>
         </div>
-        <p>Completed a remote summer internship contributing to the organization's web presence and software development tasks.</p>
+        <p>Completed a remote summer internship contributing to the organization&rsquo;s web presence and software development tasks.</p>
       </div>
     </section>
 
@@ -139,7 +140,7 @@
             <i class="fas fa-droplet project__icon"></i>
             <span class="pill">Smart India Hackathon 2025</span>
           </div>
-          <h3>AquaJeevan - Smart Health &amp; Water Surveillance</h3>
+          <h3>AquaJeevan &mdash; Smart Health &amp; Water Surveillance</h3>
           <p>Ranked Top 100 of 864 teams. An AI/ML and IoT solution using sensor nodes to predict and prevent water-borne diseases in rural India. Led the first hardware-software integration, feeding embedded sensor streams into ML inference models.</p>
           <ul class="tags"><li>AI/ML</li><li>IoT</li><li>Supabase</li><li>Python</li></ul>
         </article>
@@ -149,7 +150,7 @@
             <i class="fas fa-graduation-cap project__icon"></i>
             <span class="pill">Devshouse 2025</span>
           </div>
-          <h3>EduMadad - Student Loan Assistance Portal</h3>
+          <h3>EduMadad &mdash; Student Loan Assistance Portal</h3>
           <p>Ranked Top 65 nationally at the GDG VIT Chennai hackathon. A web portal that helps students from economically weaker sections discover and access higher-education financing options.</p>
           <ul class="tags"><li>Web Portal</li><li>PostgreSQL</li><li>Gemini AI</li></ul>
           <a href="https://github.com/Asmitcod/EduMadad.git" target="_blank" rel="noopener" class="project__link"><i class="fab fa-github"></i> Source</a>
@@ -203,7 +204,7 @@
         <div class="timeline__item reveal">
           <div class="timeline__dot"></div>
           <div class="card">
-            <span class="pill">Aug 2023 - Jul 2027</span>
+            <span class="pill">Aug 2023 &ndash; Jul 2027</span>
             <h3>B.Tech, Computer Science (AI &amp; Robotics)</h3>
             <p class="muted">VIT University, Chennai Campus</p>
             <p>Coursework: Data Structures and Algorithms, DBMS, Computer Networks, Operating Systems, Computer Architecture.</p>
@@ -214,7 +215,7 @@
           <div class="card">
             <span class="pill">Completed 2023</span>
             <h3>Senior Secondary Education</h3>
-            <p class="muted">St. Joseph's Convent School, Kotdwara</p>
+            <p class="muted">St. Joseph&rsquo;s Convent School, Kotdwara</p>
             <p>Percentage: 88%</p>
           </div>
         </div>
@@ -256,7 +257,7 @@
     <!-- BEYOND CODE -->
     <section class="section" id="beyond-code">
       <h2 class="section__title reveal"><span class="mono">07.</span> Beyond Code</h2>
-      <p class="section__desc reveal">Tech is my passion, but creativity fuels my soul. Here's a glimpse beyond the lines of code.</p>
+      <p class="section__desc reveal">Tech is my passion, but creativity fuels my soul. Here&rsquo;s a glimpse beyond the lines of code.</p>
       <div class="grid grid--2">
         <div class="card reveal tilt"><h3>📷 Photography</h3><p>Check out my photography journey on Instagram.</p><a href="https://www.instagram.com/pixels.in3d_vitc" target="_blank" rel="noopener" class="btn btn--outline magnetic"><span>Visit Instagram</span></a></div>
         <div class="card reveal tilt"><h3>🖼️ Photo Gallery</h3><p>Explore my collection of captured moments.</p><a href="gallery.html" class="btn btn--outline magnetic"><span>View Gallery</span></a></div>

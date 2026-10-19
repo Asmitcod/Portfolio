@@ -152,13 +152,41 @@
 
   /* ---------- Name glitch on hover ---------- */
   const nameEl = $(".grad");
-  const chars = "!<>-_\\/[]{}=+*^?#01";
+  const symbols = "!<>-_\\/[]{}=+*^?#01".split("");
+  let glitchTimer = 0, symW = null;
   nameEl.addEventListener("mouseenter", () => {
     if (reduced) return;
-    const final = nameEl.dataset.glitch; let frame = 0;
-    const id = setInterval(() => {
-      nameEl.textContent = final.split("").map((ch, i) => ch === " " ? " " : i < frame / 2 ? ch : chars[Math.floor(Math.random() * chars.length)]).join("");
-      if (++frame > final.length * 2) { clearInterval(id); nameEl.textContent = final; }
+    const final = nameEl.dataset.glitch, words = final.split(" ");
+    clearInterval(glitchTimer);
+
+    /* Only the characters may change, never the layout. Random glyphs are wider than the real letters, which used
+       to re-wrap the title; the hero is vertically centred, so the whole text block (hello, title, role) jumped up.
+       Fix: every letter sits in a fixed-width cell (its own real width) and only draws symbols that fit that cell. */
+    if (!symW) {
+      const probe = document.createElement("span"); probe.style.cssText = "position:absolute;visibility:hidden;white-space:pre;left:0;top:0";
+      nameEl.parentNode.appendChild(probe);
+      symW = symbols.map((c) => { probe.textContent = c; return probe.getBoundingClientRect().width; });
+      probe.remove();
+    }
+    nameEl.innerHTML = words.map((w) => `<span>${[...w].map((c) => `<span>${c}</span>`).join("")}</span>`).join(" ");
+    const wordEls = [...nameEl.children], cells = wordEls.map((w) => [...w.children]);
+    const wW = wordEls.map((w) => w.getBoundingClientRect().width), cW = cells.map((row) => row.map((c) => c.getBoundingClientRect().width));
+    wordEls.forEach((w, i) => {
+      w.style.cssText = `display:inline-block;white-space:nowrap;width:${wW[i]}px`;
+      cells[i].forEach((c, k) => { c.style.cssText = `display:inline-block;text-align:center;width:${cW[i][k]}px`; });
+    });
+    let frame = 0;
+    glitchTimer = setInterval(() => {
+      let idx = 0;
+      cells.forEach((row, wi) => {
+        row.forEach((c, k) => {
+          if (idx++ < frame / 2) { c.textContent = words[wi][k]; return; }
+          const fit = symbols.filter((_, n) => symW[n] <= cW[wi][k] * 1.15 + 3);
+          c.textContent = (fit.length ? fit : ["!"])[Math.floor(Math.random() * (fit.length || 1))];
+        });
+        idx++; /* the space between words */
+      });
+      if (++frame > final.length * 2) { clearInterval(glitchTimer); nameEl.textContent = final; }
     }, 30);
   });
 
