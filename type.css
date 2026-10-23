@@ -66,33 +66,24 @@ html:not(.phone-mode) .field textarea:focus + label,
 html:not(.phone-mode) .field input:not(:placeholder-shown) + label,
 html:not(.phone-mode) .field textarea:not(:placeholder-shown) + label { font-size: var(--t-xs); }
 html:not(.phone-mode) .footer { font-size: var(--t-sm); }
-/* tile gradients: each tile gets its own soft accent (set --acc), stronger on hover */
-html:not(.phone-mode) .card { --acc: 92, 142, 255; --g: .14; background: linear-gradient(150deg, rgba(var(--acc), var(--g)) 0%, rgba(var(--acc), 0) 62%), var(--bg-alt); box-shadow: inset 0 1px 0 rgba(var(--acc), .28), var(--shadow); transition: border-color .3s, box-shadow .3s, --g .35s ease; }
-html:not(.phone-mode) .card:hover { --g: .24; border-color: rgba(var(--acc), .6); }
-html:not(.phone-mode) body.light .card { --g: .10; }
-html:not(.phone-mode) body.light .card:hover { --g: .17; }
-html:not(.phone-mode) .project:nth-child(1) { --acc: 92, 142, 255; }
-html:not(.phone-mode) .project:nth-child(2) { --acc: 180, 108, 255; }
-html:not(.phone-mode) .project:nth-child(3) { --acc: 0, 229, 255; }
-html:not(.phone-mode) .project:nth-child(4) { --acc: 61, 220, 151; }
-html:not(.phone-mode) .skill:nth-child(1) { --acc: 92, 142, 255; }
-html:not(.phone-mode) .skill:nth-child(2) { --acc: 0, 229, 255; }
-html:not(.phone-mode) .skill:nth-child(3) { --acc: 61, 220, 151; }
-html:not(.phone-mode) .skill:nth-child(4) { --acc: 180, 108, 255; }
-html:not(.phone-mode) .skill:nth-child(5) { --acc: 255, 120, 170; }
-html:not(.phone-mode) .skill:nth-child(6) { --acc: 255, 184, 77; }
-html:not(.phone-mode) .ach:nth-child(1) { --acc: 255, 184, 77; }
-html:not(.phone-mode) .ach:nth-child(2) { --acc: 255, 120, 170; }
-html:not(.phone-mode) .ach:nth-child(3) { --acc: 0, 229, 255; }
-html:not(.phone-mode) #experience .card { --acc: 0, 229, 255; }
-html:not(.phone-mode) #research .card { --acc: 180, 108, 255; }
-html:not(.phone-mode) #education .card { --acc: 61, 220, 151; }
-html:not(.phone-mode) .repo:nth-child(3n+1) { --acc: 92, 142, 255; }
-html:not(.phone-mode) .repo:nth-child(3n+2) { --acc: 180, 108, 255; }
-html:not(.phone-mode) .repo:nth-child(3n+3) { --acc: 0, 229, 255; }
+/* tile gradients: ONE palette per section, identical on every tile in it, so rows never look uneven.
+   Each palette is two colours (--c1 top-left glow, --c2 bottom-right glow). The glows have a fixed pixel size,
+   so a short card and a tall card look exactly the same. Hover strengthens them. */
+html:not(.phone-mode) .card { --c1: 92, 142, 255; --c2: 180, 108, 255; --acc: var(--c1); --g: .16;
+  background: radial-gradient(circle 300px at 0% 0%, rgba(var(--c1), var(--g)), transparent 72%), radial-gradient(circle 260px at 100% 100%, rgba(var(--c2), calc(var(--g) * .7)), transparent 72%), var(--bg-alt);
+  box-shadow: inset 0 1px 0 rgba(var(--c1), .3), var(--shadow); transition: border-color .3s, box-shadow .3s, --g .35s ease; }
+html:not(.phone-mode) .card:hover { --g: .26; border-color: rgba(var(--c1), .6); }
+html:not(.phone-mode) body.light .card { --g: .11; }
+html:not(.phone-mode) body.light .card:hover { --g: .18; }
+html:not(.phone-mode) #projects .card { --c1: 255, 30, 45; --c2: 150, 15, 40; --tag: 255, 255, 255; --tag-a: .08; --ico: 92, 142, 255; }
+html:not(.phone-mode) #skills .card { --c1: 0, 229, 255; --c2: 92, 142, 255; }
+html:not(.phone-mode) #achievements .card { --c1: 255, 120, 170; --c2: 180, 108, 255; --acc: 255, 184, 77; }
+html:not(.phone-mode) #experience .card { --c1: 0, 229, 255; --c2: 92, 142, 255; }
+html:not(.phone-mode) #education .card { --c1: 61, 220, 151; --c2: 0, 229, 255; }
+html:not(.phone-mode) #research .card { --c1: 180, 108, 255; --c2: 92, 142, 255; }
 html:not(.phone-mode) .project__icon,
 html:not(.phone-mode) .exp__icon,
 html:not(.phone-mode) .skill h3 i,
-html:not(.phone-mode) .ach i { color: rgb(var(--acc)); }
+html:not(.phone-mode) .ach i { color: rgb(var(--ico, var(--acc))); }
 html:not(.phone-mode) .card .pill { color: rgb(var(--acc)); border-color: rgba(var(--acc), .38); }
-html:not(.phone-mode) .card .tags li { background: rgba(var(--acc), .13); }
+html:not(.phone-mode) .card .tags li { background: rgba(var(--tag, var(--acc)), var(--tag-a, .14)); }

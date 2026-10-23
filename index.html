@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="fonts.css" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="type.css" />
+  <link rel="stylesheet" href="spatial.css" />
   <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)" />
 </head>
 <body class="dark" id="top">
@@ -320,6 +321,7 @@
       document.write('<scr' + 'ipt src="mobile.js"></scr' + 'ipt>');
     } else {
       document.write('<scr' + 'ipt src="script.js"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="spatial.js"></scr' + 'ipt>');
       if (window.matchMedia("(max-width: 768px)").matches) {
         /* small phone-sized screen viewing the desktop site on purpose: offer a way back */
         var back = document.createElement("button");
