@@ -125,7 +125,7 @@
       <h2 class="section__title reveal"><span class="mono">02.</span> Projects</h2>
       <div class="grid grid--2">
 
-        <article class="card project reveal tilt">
+        <article class="card project reveal tilt" data-project-id="smart-traffic">
           <div class="project__top">
             <i class="fas fa-traffic-light project__icon"></i>
             <span class="pill">Personal Project</span>
@@ -136,7 +136,7 @@
           <a href="https://github.com/Asmitcod/SmartTraffic.git" target="_blank" rel="noopener" class="project__link"><i class="fab fa-github"></i> Source</a>
         </article>
 
-        <article class="card project reveal tilt">
+        <article class="card project reveal tilt" data-project-id="aquajeevan">
           <div class="project__top">
             <i class="fas fa-droplet project__icon"></i>
             <span class="pill">Smart India Hackathon 2025</span>
@@ -146,7 +146,7 @@
           <ul class="tags"><li>AI/ML</li><li>IoT</li><li>Supabase</li><li>Python</li></ul>
         </article>
 
-        <article class="card project reveal tilt">
+        <article class="card project reveal tilt" data-project-id="edumadad">
           <div class="project__top">
             <i class="fas fa-graduation-cap project__icon"></i>
             <span class="pill">Devshouse 2025</span>
@@ -157,7 +157,7 @@
           <a href="https://github.com/Asmitcod/EduMadad.git" target="_blank" rel="noopener" class="project__link"><i class="fab fa-github"></i> Source</a>
         </article>
 
-        <article class="card project reveal tilt">
+        <article class="card project reveal tilt" data-project-id="aqi-monitor">
           <div class="project__top">
             <i class="fas fa-wind project__icon"></i>
             <span class="pill">Hardware + Data</span>
@@ -170,30 +170,98 @@
 
       </div>
     
-      <div class="gh reveal" id="gh" hidden>
+      <div class="gh reveal" id="gh">
         <h3 class="gh__title"><i class="fab fa-github"></i> Latest from GitHub
           <a href="https://github.com/Asmitcod?tab=repositories" target="_blank" rel="noopener">View all &rarr;</a>
         </h3>
-        <div class="grid grid--3" id="gh-grid"></div>
+        <ol class="gh__history mono" id="gh-history" aria-label="Latest GitHub commits"></ol>
+        <p class="gh__status" id="gh-status" role="status" aria-live="polite">Loading GitHub history...</p>
       </div>
     </section>
 
     <!-- SKILLS -->
     <section class="section" id="skills">
       <h2 class="section__title reveal"><span class="mono">03.</span> Skills</h2>
-      <div class="grid grid--3">
-        <div class="card skill reveal tilt"><h3><i class="fas fa-code"></i> Languages</h3><ul class="tags"><li>Python</li><li>Java</li><li>C</li><li>C++</li><li>SQL</li><li>Bash</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-globe"></i> Full Stack &amp; Web</h3><ul class="tags"><li>Flask</li><li>Socket.IO</li><li>REST APIs</li><li>HTML5</li><li>CSS3</li><li>Responsive UI</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-database"></i> Databases &amp; Analysis</h3><ul class="tags"><li>PostgreSQL</li><li>AWS DynamoDB</li><li>Schema Design</li><li>Data Preprocessing</li><li>Data Analysis</li><li>Data Visualization</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-cloud"></i> Cloud &amp; Tools</h3><ul class="tags"><li>AWS</li><li>Git</li><li>GitHub</li><li>Git Bash</li><li>Bash Scripting</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-brain"></i> AI &amp; ML</h3><ul class="tags"><li>Machine Learning</li><li>Reinforcement Learning</li><li>Agentic AI</li><li>ML Inference</li></ul></div>
-        <div class="card skill reveal tilt"><h3><i class="fas fa-microchip"></i> Robotics &amp; IoT</h3><ul class="tags"><li>ROS</li><li>Raspberry Pi</li><li>Sensor Integration</li></ul></div>
-      </div>
-      <div class="marquee reveal" aria-hidden="true">
-        <div class="marquee__track">
-          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>Raspberry Pi</span><span>Data Analysis</span>
-          <span>Python</span><span>SQL</span><span>PostgreSQL</span><span>Flask</span><span>REST APIs</span><span>AWS DynamoDB</span><span>Machine Learning</span><span>Reinforcement Learning</span><span>ROS</span><span>Raspberry Pi</span><span>Data Analysis</span>
-        </div>
+      <p class="constellation__hint reveal">A few things I like building with. Pick a skill to see it in action.</p>
+      <div class="skill-clusters" id="skill-constellation">
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">01 / foundation</span><h3>Languages</h3><p>The building blocks</p></div><i class="fas fa-code"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="Python" data-projects="smart-traffic aquajeevan aqi-monitor"><span>Python</span></button>
+              <button class="skill-node" type="button" data-skill="Java" data-projects=""><span>Java</span></button>
+              <button class="skill-node" type="button" data-skill="C" data-projects=""><span>C</span></button>
+              <button class="skill-node" type="button" data-skill="C++" data-projects=""><span>C++</span></button>
+              <button class="skill-node" type="button" data-skill="SQL" data-projects="edumadad"><span>SQL</span></button>
+              <button class="skill-node" type="button" data-skill="Bash" data-projects=""><span>Bash</span></button>
+            </div>
+          </div>
+        </article>
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">02 / intelligence</span><h3>AI &amp; ML</h3><p>Learning, reasoning, inference</p></div><i class="fas fa-brain"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="Machine Learning" data-projects="aquajeevan smart-traffic"><span>Machine Learning</span></button>
+              <button class="skill-node" type="button" data-skill="Reinforcement Learning" data-projects="smart-traffic"><span>Reinforcement Learning</span></button>
+              <button class="skill-node" type="button" data-skill="Agentic AI" data-projects=""><span>Agentic AI</span></button>
+              <button class="skill-node" type="button" data-skill="ML Inference" data-projects="aquajeevan"><span>ML Inference</span></button>
+            </div>
+          </div>
+        </article>
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">03 / interface</span><h3>Web development</h3><p>From endpoint to experience</p></div><i class="fas fa-globe"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="Flask" data-projects="smart-traffic"><span>Flask</span></button>
+              <button class="skill-node" type="button" data-skill="Socket.IO" data-projects="smart-traffic"><span>Socket.IO</span></button>
+              <button class="skill-node" type="button" data-skill="REST APIs" data-projects=""><span>REST APIs</span></button>
+              <button class="skill-node" type="button" data-skill="HTML5" data-projects="edumadad"><span>HTML5</span></button>
+              <button class="skill-node" type="button" data-skill="CSS3" data-projects="edumadad"><span>CSS3</span></button>
+              <button class="skill-node" type="button" data-skill="Responsive UI" data-projects="edumadad"><span>Responsive UI</span></button>
+            </div>
+          </div>
+        </article>
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">04 / insight</span><h3>Data &amp; storage</h3><p>Making information useful</p></div><i class="fas fa-database"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="PostgreSQL" data-projects="edumadad"><span>PostgreSQL</span></button>
+              <button class="skill-node" type="button" data-skill="AWS DynamoDB" data-projects=""><span>AWS DynamoDB</span></button>
+              <button class="skill-node" type="button" data-skill="Schema Design" data-projects="aquajeevan edumadad"><span>Schema Design</span></button>
+              <button class="skill-node" type="button" data-skill="Data Preprocessing" data-projects="aquajeevan aqi-monitor"><span>Data Preprocessing</span></button>
+              <button class="skill-node" type="button" data-skill="Data Analysis" data-projects="aqi-monitor"><span>Data Analysis</span></button>
+              <button class="skill-node" type="button" data-skill="Data Visualization" data-projects="aqi-monitor"><span>Data Visualization</span></button>
+            </div>
+          </div>
+        </article>
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">05 / infrastructure</span><h3>Cloud &amp; workflow</h3><p>Tools that keep things moving</p></div><i class="fas fa-cloud"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="AWS" data-projects=""><span>AWS</span></button>
+              <button class="skill-node" type="button" data-skill="Git" data-projects=""><span>Git</span></button>
+              <button class="skill-node" type="button" data-skill="GitHub" data-projects=""><span>GitHub</span></button>
+              <button class="skill-node" type="button" data-skill="Git Bash" data-projects=""><span>Git Bash</span></button>
+              <button class="skill-node" type="button" data-skill="Bash Scripting" data-projects=""><span>Bash Scripting</span></button>
+            </div>
+          </div>
+        </article>
+        <article class="card skill-cluster reveal">
+          <div class="skill-cluster__head"><div><span class="skill-cluster__eyebrow">06 / real world</span><h3>Robotics &amp; IoT</h3><p>Software meets the physical world</p></div><i class="fas fa-microchip"></i></div>
+          <div class="skill-cluster__network">
+            <svg class="constellation__lines" aria-hidden="true"></svg>
+            <div class="constellation__nodes">
+              <button class="skill-node" type="button" data-skill="ROS" data-projects="aquajeevan"><span>ROS</span></button>
+              <button class="skill-node" type="button" data-skill="Raspberry Pi" data-projects=""><span>Raspberry Pi</span></button>
+              <button class="skill-node" type="button" data-skill="Sensor Integration" data-projects="aquajeevan aqi-monitor"><span>Sensor Integration</span></button>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -258,10 +326,26 @@
     <!-- BEYOND CODE -->
     <section class="section" id="beyond-code">
       <h2 class="section__title reveal"><span class="mono">07.</span> Beyond Code</h2>
-      <p class="section__desc reveal">Tech is my passion, but creativity fuels my soul. Here&rsquo;s a glimpse beyond the lines of code.</p>
-      <div class="grid grid--2">
-        <div class="card reveal tilt"><h3>📷 Photography</h3><p>Check out my photography journey on Instagram.</p><a href="https://www.instagram.com/pixels.in3d_vitc" target="_blank" rel="noopener" class="btn btn--outline magnetic"><span>Visit Instagram</span></a></div>
-        <div class="card reveal tilt"><h3>🖼️ Photo Gallery</h3><p>Explore my collection of captured moments.</p><a href="gallery.html" class="btn btn--outline magnetic"><span>View Gallery</span></a></div>
+      <p class="section__desc reveal">A little visual diary for everything that doesn&rsquo;t fit in a commit.</p>
+      <div class="beyond-gallery card reveal">
+        <div class="beyond-gallery__copy">
+          <span class="beyond-gallery__eyebrow"><i class="fas fa-circle"></i> VISUAL DIARY &middot; 08 FRAMES</span>
+          <h3>Life,<br /><span>between the lines.</span></h3>
+          <p>Small details, passing moments, and scenes worth keeping. A collection still in progress.</p>
+          <a href="gallery.html" class="btn btn--outline magnetic"><span>Explore the gallery</span><i class="fas fa-arrow-right"></i></a>
+          <span class="beyond-gallery__note mono">SHOT, KEPT, REMEMBERED</span>
+        </div>
+        <a href="gallery.html" class="beyond-gallery__preview" aria-label="Explore all photographs in the gallery">
+          <figure class="beyond-gallery__frame beyond-gallery__frame--hero"><img src="im7.png" alt="A person watching the sun set behind a mountain range" loading="lazy" /></figure>
+          <figure class="beyond-gallery__frame"><img src="im8.png" alt="A rainbow glowing above a campus building after rain" loading="lazy" /></figure>
+          <figure class="beyond-gallery__frame"><img src="im6.jpg" alt="Golden storm clouds gathering over the city at dusk" loading="lazy" /></figure>
+          <div class="beyond-gallery__filmstrip" aria-hidden="true">
+            <img src="im4.jpg" alt="" loading="lazy" />
+            <img src="im5.jpg" alt="" loading="lazy" />
+            <span>+ MORE IN THE GALLERY <i class="fas fa-arrow-up-right-from-square"></i></span>
+          </div>
+          <span class="beyond-gallery__stamp mono">AB / PHOTO LOG</span>
+        </a>
       </div>
     </section>
 

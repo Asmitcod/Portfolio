@@ -469,38 +469,176 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
 
   /* ---------- Latest repos from GitHub ---------- */
   (async () => {
-    const box = $("#gh"), grid = $("#gh-grid");
-    if (!box || !grid) return;
-    const user = "Asmitcod", cacheKey = "gh-repos-v1";
+    const box = $("#gh"), historyList = $("#gh-history"), status = $("#gh-status");
+    if (!box || !historyList || !status) return;
+    const user = "Asmitcod", cacheKey = "gh-history-v2";
     const colors = { Python: "#3572A5", JavaScript: "#f1e05a", HTML: "#e34c26", CSS: "#563d7c", Java: "#b07219", C: "#555555", "C++": "#f34b7d", Shell: "#89e051", Jupyter: "#DA5B0B", "Jupyter Notebook": "#DA5B0B", TypeScript: "#3178c6" };
-    const ago = (iso) => {
-      const d = Math.floor((Date.now() - new Date(iso)) / 864e5);
-      return d < 1 ? "today" : d < 30 ? d + "d ago" : d < 365 ? Math.floor(d / 30) + "mo ago" : Math.floor(d / 365) + "y ago";
+    const requestJson = async (url) => {
+      const response = await fetch(url, { headers: { Accept: "application/vnd.github+json" } });
+      if (!response.ok) throw new Error("GitHub returned HTTP " + response.status);
+      return response.json();
     };
+    const pushedLabel = (iso) => {
+      const timestamp = Date.parse(iso);
+      if (!Number.isFinite(timestamp)) return "pushed recently";
+      const days = Math.max(0, Math.floor((Date.now() - timestamp) / 864e5));
+      return days === 0 ? "pushed today" : `pushed ${days} day${days === 1 ? "" : "s"} ago`;
+    };
+    let entries;
     try {
-      let repos; const cached = sessionStorage.getItem(cacheKey);
-      if (cached) repos = JSON.parse(cached);
-      else {
-        const r = await fetch(`https://api.github.com/users/${user}/repos?sort=pushed&per_page=12`, { headers: { Accept: "application/vnd.github+json" } });
-        if (!r.ok) throw new Error("github " + r.status);
-        repos = await r.json();
-        try { sessionStorage.setItem(cacheKey, JSON.stringify(repos)); } catch (e) {}
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) entries = JSON.parse(cached);
+      } catch (err) {
+        entries = null;
       }
-      repos = repos.filter((r) => !r.fork && r.name.toLowerCase() !== user.toLowerCase()).slice(0, 6);
-      if (!repos.length) return;
-      repos.forEach((r) => {
-        const a = document.createElement("a");
-        a.className = "card repo"; a.href = r.html_url; a.target = "_blank"; a.rel = "noopener";
-        const h = document.createElement("h4"); h.textContent = r.name;
-        const p = document.createElement("p"); p.textContent = r.description || "No description yet.";
-        const m = document.createElement("div"); m.className = "repo__meta";
-        if (r.language) { const l = document.createElement("span"); const dot = document.createElement("i"); dot.className = "lang-dot"; dot.style.background = colors[r.language] || "var(--primary)"; l.append(dot, r.language); m.append(l); }
-        const st = document.createElement("span"); st.textContent = "\u2605 " + r.stargazers_count; m.append(st);
-        const up = document.createElement("span"); up.textContent = "updated " + ago(r.pushed_at); m.append(up);
-        a.append(h, p, m); grid.append(a);
+      if (!Array.isArray(entries) || !entries.length) {
+        const repos = await requestJson(`https://api.github.com/users/${user}/repos?sort=pushed&per_page=12`);
+        if (!Array.isArray(repos)) throw new Error("GitHub returned an unexpected repository list");
+        const recentRepos = repos.filter((repo) => !repo.fork && repo.name.toLowerCase() !== user.toLowerCase()).slice(0, 6);
+        const results = await Promise.allSettled(recentRepos.map(async (repo) => {
+          const commits = await requestJson(`https://api.github.com/repos/${user}/${encodeURIComponent(repo.name)}/commits?per_page=1`);
+          const commit = Array.isArray(commits) ? commits[0] : null;
+          return commit && commit.sha ? { repo, commit } : null;
+        }));
+        entries = results.filter((result) => result.status === "fulfilled" && result.value).map((result) => result.value);
+        if (!entries.length) throw new Error("No recent repository commits were available");
+        try { sessionStorage.setItem(cacheKey, JSON.stringify(entries)); } catch (err) {}
+        if (results.some((result) => result.status === "rejected")) {
+          status.textContent = "Some recent commit details could not be loaded.";
+        }
+      }
+      entries.forEach(({ repo, commit }) => {
+        const item = document.createElement("li");
+        item.className = "gh__entry";
+        const row = document.createElement("a");
+        row.className = "gh__row";
+        row.href = commit.html_url || repo.html_url;
+        row.target = "_blank";
+        row.rel = "noopener";
+
+        const hash = document.createElement("code");
+        hash.className = "gh__hash";
+        hash.textContent = commit.sha.slice(0, 7);
+        const name = document.createElement("span");
+        name.className = "gh__repo";
+        name.textContent = repo.name;
+        const language = document.createElement("span");
+        language.className = "gh__language";
+        const dot = document.createElement("i");
+        dot.setAttribute("aria-hidden", "true");
+        dot.style.setProperty("--language-color", colors[repo.language] || "var(--primary)");
+        const languageName = document.createElement("span");
+        languageName.textContent = repo.language || "Unknown";
+        language.append(dot, languageName);
+        const pushed = document.createElement("time");
+        pushed.className = "gh__pushed";
+        pushed.dateTime = repo.pushed_at || "";
+        pushed.textContent = pushedLabel(repo.pushed_at);
+        row.append(hash, name, language, pushed);
+        item.append(row);
+        historyList.append(item);
       });
-      box.hidden = false;
-    } catch (err) { /* stay hidden if GitHub is unreachable */ }
+      if (!status.textContent.includes("Some recent")) status.textContent = "";
+    } catch (err) {
+      status.textContent = "GitHub history is unavailable right now.";
+      console.error("Could not load GitHub history:", err);
+    }
+  })();
+
+  /* ---------- Interactive skills constellation ---------- */
+  (() => {
+    const constellation = $("#skill-constellation");
+    if (!constellation) return;
+    const nodes = $$(".skill-node", constellation);
+    const networks = $$(".skill-cluster__network", constellation);
+    const projects = $$(".project[data-project-id]");
+    let pinnedNode = null;
+    let connections = [];
+
+    function drawConnections() {
+      connections = [];
+      networks.forEach((network) => {
+        const bounds = network.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+        const svg = $(".constellation__lines", network);
+        const clusterNodes = $$(".skill-node", network);
+        const points = clusterNodes.map((node) => {
+          const rect = node.getBoundingClientRect();
+          return { node, x: rect.left - bounds.left + rect.width / 2, y: rect.top - bounds.top + rect.height / 2 };
+        });
+        svg.setAttribute("viewBox", `0 0 ${bounds.width} ${bounds.height}`);
+        svg.replaceChildren();
+        const seen = new Set();
+        points.forEach((point, index) => {
+          const nearest = points.map((other, otherIndex) => ({
+            index: otherIndex,
+            distance: Math.hypot(point.x - other.x, point.y - other.y)
+          })).filter((other) => other.index !== index).sort((a, b) => a.distance - b.distance);
+          nearest.slice(0, 1).forEach(({ index: otherIndex }) => {
+            const key = [Math.min(index, otherIndex), Math.max(index, otherIndex)].join("-");
+            if (seen.has(key)) return;
+            seen.add(key);
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", points[index].x);
+            line.setAttribute("y1", points[index].y);
+            line.setAttribute("x2", points[otherIndex].x);
+            line.setAttribute("y2", points[otherIndex].y);
+            svg.append(line);
+            connections.push({ line, nodes: [points[index].node, points[otherIndex].node] });
+          });
+        });
+      });
+    }
+
+    function showSkill(node) {
+      const linkedProjects = node.dataset.projects.split(/\s+/).filter(Boolean);
+      nodes.forEach((skillNode) => skillNode.classList.toggle("is-active", skillNode === node));
+      nodes.forEach((skillNode) => skillNode.setAttribute("aria-pressed", String(skillNode === pinnedNode)));
+      projects.forEach((project) => {
+        const linked = linkedProjects.includes(project.dataset.projectId);
+        project.classList.toggle("project--linked", linked);
+        project.classList.toggle("project--dimmed", linkedProjects.length > 0 && !linked);
+      });
+      connections.forEach(({ line, nodes: connectedNodes }) => {
+        line.classList.toggle("is-active", connectedNodes.includes(node));
+      });
+    }
+
+    function clearSkill() {
+      nodes.forEach((node) => {
+        node.classList.remove("is-active");
+        node.setAttribute("aria-pressed", "false");
+      });
+      projects.forEach((project) => project.classList.remove("project--linked", "project--dimmed"));
+      connections.forEach(({ line }) => line.classList.remove("is-active"));
+    }
+
+    nodes.forEach((node) => {
+      node.setAttribute("aria-pressed", "false");
+      const projectsList = node.dataset.projects.split(/\s+/).filter(Boolean);
+      node.setAttribute("aria-label", projectsList.length
+        ? `${node.dataset.skill}; used in ${projectsList.length} ${projectsList.length === 1 ? "project" : "projects"}`
+        : node.dataset.skill);
+      node.addEventListener("pointerenter", () => { if (!pinnedNode) showSkill(node); });
+      node.addEventListener("pointerleave", () => {
+        if (!pinnedNode && document.activeElement !== node) clearSkill();
+      });
+      node.addEventListener("focus", () => { if (!pinnedNode) showSkill(node); });
+      node.addEventListener("blur", () => { if (!pinnedNode) clearSkill(); });
+      node.addEventListener("click", () => {
+        pinnedNode = pinnedNode === node ? null : node;
+        if (pinnedNode) showSkill(pinnedNode);
+        else clearSkill();
+      });
+    });
+
+    drawConnections();
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(drawConnections);
+      networks.forEach((network) => observer.observe(network));
+    }
+    else window.addEventListener("resize", drawConnections);
   })();
 
   $("#year").textContent = new Date().getFullYear();

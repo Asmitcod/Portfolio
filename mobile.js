@@ -21,9 +21,8 @@
   const GITHUB = hrefOf('.hero__cta a[aria-label="GitHub"]', "https://github.com/Asmitcod");
   const LINKEDIN = hrefOf('.hero__cta a[aria-label="LinkedIn"]', "https://www.linkedin.com/in/asmit-bisht-a09682293");
   const EMAIL = "bishtasmit15@gmail.com";
-  const INSTA = hrefOf('#beyond-code a[href*="instagram"]', "https://www.instagram.com/pixels.in3d_vitc");
   const FORM_ACTION = ($("#contact-form") || {}).action || "https://formspree.io/f/mkgrjqqv";
-  const PHOTOS = ["im1.jpg", "im2.jpg", "im3.jpg", "im4.jpg", "im5.jpg"];
+  const PHOTOS = ["im1.jpg", "im2.jpg", "im3.jpg", "im4.jpg", "im5.jpg", "im6.jpg", "im7.png", "im8.png"];
 
   /* ---------- Theme (shares the desktop key) ---------- */
   const body = document.body;
@@ -97,12 +96,17 @@
             <button class="ph-theme" aria-label="Toggle theme"></button>
           </div>
           <button class="ph-tile ph-t-projects" data-app="projects"><span class="ph-eyebrow"><i class="fas fa-diagram-project"></i> Projects<em class="ph-idx" id="ph-idx"></em></span><div class="ph-rot" id="ph-rot"></div><div class="ph-rot__dots" id="ph-rotdots"></div></button>
-          <button class="ph-tile ph-t-sm ph-t-gal" style="--c:#ff9966" data-app="gallery"><span class="ph-sm__ic"><i class="fas fa-image"></i></span><span class="ph-sm__t"><b>Gallery</b><small>5 photos</small></span></button>
+          <button class="ph-tile ph-t-sm ph-t-gal" style="--c:#ff9966" data-app="gallery"><span class="ph-sm__ic"><i class="fas fa-image"></i></span><span class="ph-sm__t"><b>Gallery</b><small>8 photos</small></span></button>
           <button class="ph-tile ph-t-sm" style="--c:#ffb454" data-app="experience"><span class="ph-sm__ic"><i class="fas fa-briefcase"></i></span><span class="ph-sm__t"><b>Experience</b><small id="ph-s-exp"></small></span></button>
           <button class="ph-tile ph-t-sm" style="--c:#3ddc97" data-app="education"><span class="ph-sm__ic"><i class="fas fa-graduation-cap"></i></span><span class="ph-sm__t"><b>Education</b><small id="ph-s-edu"></small></span></button>
           <button class="ph-tile ph-t-sm" style="--c:#a78bff" data-app="research"><span class="ph-sm__ic"><i class="fas fa-microscope"></i></span><span class="ph-sm__t"><b>Research</b><small id="ph-s-res"></small></span></button>
           <button class="ph-tile ph-t-term" data-app="terminal"><span class="ph-eyebrow"><i class="fas fa-terminal"></i> Terminal</span><div class="ph-tm__log" id="ph-tm-log"></div><div class="ph-tm"><span class="ph-tm__p">visitor@asmit:~$</span> <span id="ph-typed"></span><i class="ph-caret"></i></div><div class="ph-tm__out" id="ph-typed-out"></div></button>
-          <button class="ph-tile ph-t-skills" data-app="skills"><div class="ph-marq"><div class="ph-marq__in" id="ph-marq"></div></div></button>
+          <button class="ph-tile ph-t-skills" data-app="skills">
+            <span class="ph-skill-tile__head"><span class="ph-eyebrow"><i class="fas fa-code"></i> Skills</span><em id="ph-skill-count"></em></span>
+            <b class="ph-skill-tile__title">Things I build with</b>
+            <span class="ph-marq" aria-hidden="true"><span class="ph-marq__in" id="ph-marq"></span></span>
+            <span class="ph-skill-tile__hint">Tap to explore <i class="fas fa-arrow-right"></i></span>
+          </button>
           <button class="ph-tile ph-t-awards" data-app="awards"><span class="ph-eyebrow"><i class="fas fa-trophy"></i> Awards</span><svg class="ph-ring" viewBox="0 0 64 64" aria-hidden="true"><circle class="t" cx="32" cy="32" r="26"/><circle class="a" id="ph-ring-a" cx="32" cy="32" r="26"/></svg><b class="ph-big">Top <span id="ph-n">100</span></b><span class="ph-sub">864 teams \u00b7 SIH '25</span></button>
           <button class="ph-tile ph-t-gh" data-app="github"><span class="ph-eyebrow"><i class="fab fa-github"></i> GitHub<em class="ph-livedot"></em></span><div class="ph-spark" id="ph-spark"><i></i><i></i><i></i><i></i><i></i><i></i></div><b class="ph-gh__name" id="ph-gh-name">Asmitcod</b><span class="ph-sub" id="ph-gh-sub">latest repos</span></button>
         </div>
@@ -306,9 +310,11 @@
     }, { passive: true });
   }
 
-  /* skills: marquee of real tags */
-  const chips = $$("#skills .tags li").map((l) => `<span>${esc(l.textContent.trim())}</span>`).join("");
+  /* skills: a live preview of the curated skill groups */
+  const skillNames = $$("#skills .skill-node").map((node) => node.dataset.skill);
+  const chips = skillNames.map((name) => `<span>${esc(name)}</span>`).join("");
   $("#ph-marq").innerHTML = chips + chips;
+  $("#ph-skill-count").textContent = `${skillNames.length} NODES`;
 
   /* small tiles: one line from the real content */
   const sub = (sel, fb) => (($(sel) || {}).textContent || fb).trim();
@@ -419,20 +425,109 @@
     }, { passive: true });
   }
   function buildSkills(container) {
-    $$("#skills .skill").forEach((s, i) => {
-      const h = $("h3", s), tags = $(".tags", s);
-      const acc = el("div", "card ph-acc" + (i === 0 ? " open" : ""));
-      const btn = el("button", "", `<span>${h ? h.innerHTML : ""}</span><i class="fas fa-chevron-down c"></i>`);
-      const wrap = el("div", "ph-acc__body"), inner = el("div"); if (tags) inner.append(clean(tags)); wrap.append(inner);
-      btn.addEventListener("click", () => { acc.classList.toggle("open"); buzz(6); });
-      acc.append(btn, wrap); container.append(acc);
+    const clusters = $$("#skills .skill-cluster");
+    const projectCards = new Map($$("#projects .project[data-project-id]").map((project) => [project.dataset.projectId, project]));
+    const colors = ["#00e5ff", "#b46cff", "#5c8eff", "#48c9a2", "#ffb86b", "#ff7b9b"];
+    container.append(el("p", "ph-hint ph-skill-intro", "Open a cluster, then tap a skill to see where it shows up."));
+
+    clusters.forEach((cluster, index) => {
+      const heading = $(".skill-cluster__head h3", cluster);
+      const description = $(".skill-cluster__head p", cluster);
+      const eyebrow = $(".skill-cluster__eyebrow", cluster);
+      const icon = $(".skill-cluster__head > i", cluster);
+      const skillNodes = $$(".skill-node", cluster);
+      const acc = el("section", "card ph-acc ph-skill-acc" + (index === 0 ? " open" : ""));
+      acc.style.setProperty("--skill-color", colors[index % colors.length]);
+
+      const btn = el("button", "");
+      btn.type = "button";
+      btn.setAttribute("aria-expanded", String(index === 0));
+      btn.setAttribute("aria-controls", `ph-skill-group-${index}`);
+      const title = el("span", "ph-skill-acc__title");
+      const label = el("span", "ph-skill-acc__eyebrow", eyebrow ? eyebrow.textContent.trim() : `SKILL SET ${index + 1}`);
+      const name = el("span", "ph-skill-acc__name", heading ? heading.textContent.trim() : "Skills");
+      const summary = el("span", "ph-skill-acc__summary", description ? description.textContent.trim() : "");
+      title.append(label, name, summary);
+      const iconWrap = el("span", "ph-skill-acc__icon");
+      if (icon) {
+        const iconClone = icon.cloneNode();
+        iconWrap.append(iconClone);
+      }
+      const count = el("span", "ph-skill-acc__count", String(skillNodes.length).padStart(2, "0"));
+      const chevron = el("i", "fas fa-chevron-down c");
+      btn.append(title, iconWrap, count, chevron);
+
+      const wrap = el("div", "ph-acc__body");
+      wrap.id = `ph-skill-group-${index}`;
+      wrap.setAttribute("aria-hidden", String(index !== 0));
+      const inner = el("div");
+      const skills = el("div", "ph-skill-chips");
+      skillNodes.forEach((sourceNode) => {
+        const skill = sourceNode.dataset.skill;
+        const chip = el("button", "ph-skill-chip", `<i></i><span>${esc(skill)}</span>`);
+        chip.type = "button";
+        chip.setAttribute("aria-pressed", "false");
+        chip.addEventListener("click", () => {
+          $$(".ph-skill-chip", container).forEach((other) => {
+            const selected = other === chip;
+            other.classList.toggle("selected", selected);
+            other.setAttribute("aria-pressed", String(selected));
+          });
+          showSkillProjects(skill, sourceNode.dataset.projects, trace, projectCards);
+          buzz(6);
+        });
+        skills.append(chip);
+      });
+      inner.append(skills);
+      wrap.append(inner);
+      btn.addEventListener("click", () => {
+        const open = acc.classList.toggle("open");
+        btn.setAttribute("aria-expanded", String(open));
+        wrap.setAttribute("aria-hidden", String(!open));
+        buzz(6);
+      });
+      acc.append(btn, wrap);
+      container.append(acc);
     });
+
+    const trace = el("section", "ph-skill-trace");
+    trace.setAttribute("aria-live", "polite");
+    trace.append(el("p", "ph-skill-trace__empty", "Tap a skill above to trace it to a project."));
+    container.append(trace);
+  }
+  function showSkillProjects(skill, projectIds, trace, projectCards) {
+    trace.replaceChildren();
+    const heading = el("div", "ph-skill-trace__head");
+    heading.append(el("span", "ph-skill-trace__label", "SKILL TRACE"), el("h3", "", skill));
+    trace.append(heading);
+    const related = projectIds.split(/\s+/).filter(Boolean).map((id) => projectCards.get(id)).filter(Boolean);
+    if (!related.length) {
+      trace.append(el("p", "ph-skill-trace__empty", "No featured project is linked to this skill yet."));
+      return;
+    }
+    const list = el("div", "ph-skill-trace__projects");
+    related.forEach((project) => {
+      const item = el("article", "ph-skill-trace__project");
+      const title = $("h3", project);
+      const description = $("p", project);
+      item.append(el("h4", "", title ? title.textContent.trim() : "Project"));
+      if (description) item.append(el("p", "", description.textContent.trim()));
+      const source = $(".project__link", project);
+      if (source) {
+        const link = el("a", "", '<i class="fab fa-github"></i> View source');
+        link.href = source.href;
+        link.target = "_blank";
+        link.rel = "noopener";
+        item.append(link);
+      }
+      list.append(item);
+    });
+    trace.append(list);
   }
   function buildGallery(container) {
     const g = el("div", "ph-gal");
     PHOTOS.forEach((src, i) => { const b = el("button", "", `<img src="${src}" alt="Photo ${i + 1}" loading="lazy" />`); b.addEventListener("click", () => viewer(container.closest(".ph-sheet"), i)); g.append(b); });
     container.append(g);
-    const a = el("a", "ph-insta", '<i class="fab fa-instagram"></i> Photography on Instagram'); a.href = INSTA; a.target = "_blank"; a.rel = "noopener"; container.append(a);
   }
   function viewer(sheet, start) {
     let i = start;
