@@ -28,18 +28,13 @@ html:not(.phone-mode) .tags li:hover { background: rgb(var(--neon)); color: #fff
 html:not(.phone-mode) .marquee__track span:hover { color: rgb(var(--neon)); }
 html:not(.phone-mode) .to-top { background: linear-gradient(120deg, #ff1e2d, #ff4a3d); box-shadow: 0 12px 30px -8px rgba(var(--neon), .7); }
 html:not(.phone-mode) .term-fab:hover { border-color: rgb(var(--neon)); box-shadow: 0 0 24px -4px rgba(var(--neon), .6); }
-/* ---------- spatial hero: glass chips and rings at different depths, moved by the mouse (vars set on .hero by spatial.js) ---------- */
+/* ---------- spatial hero: the window, portrait, ornament and nameplate sit at different depths and drift with the mouse (vars set on .hero by spatial.js) ---------- */
 html:not(.phone-mode) .hero__visual { position: relative; }
-html:not(.phone-mode) .hero__visual::before { content: ""; position: absolute; width: 130%; aspect-ratio: 1; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none; background: radial-gradient(circle, rgba(var(--neon), .3), rgba(92, 142, 255, .13) 46%, transparent 68%); filter: blur(34px); }
-html:not(.phone-mode) .photo__ring { border-color: rgba(92, 142, 255, .7); translate: calc(var(--px, 0) * -8px) calc(var(--py, 0) * -6px); }
-html:not(.phone-mode) .photo__ring--2 { border-color: rgba(var(--neon), .95); filter: drop-shadow(0 0 5px rgba(var(--neon), .85)); translate: calc(var(--px, 0) * -15px) calc(var(--py, 0) * -11px); }
-html:not(.phone-mode) .flip { box-shadow: 0 0 0 1px rgba(255, 255, 255, .12), 0 0 54px -4px rgba(var(--neon), .5), 0 30px 60px -24px rgba(0, 0, 0, .7); translate: calc(var(--px, 0) * 10px) calc(var(--py, 0) * 8px); }
-html:not(.phone-mode) .flip:hover { box-shadow: 0 0 0 1px rgba(255, 255, 255, .18), 0 0 64px -4px rgba(var(--neon), .6), 0 30px 60px -24px rgba(0, 0, 0, .7); }
-html:not(.phone-mode) .chip { background: var(--glass); -webkit-backdrop-filter: blur(16px) saturate(1.4); backdrop-filter: blur(16px) saturate(1.4); border-color: rgba(255, 255, 255, .12); box-shadow: inset 0 1px 0 var(--glass-hi), 0 14px 30px -12px rgba(0, 0, 0, .6); }
-html:not(.phone-mode) .chip--1 { translate: calc(var(--px, 0) * 28px) calc(var(--py, 0) * 18px); }
-html:not(.phone-mode) .chip--2 { translate: calc(var(--px, 0) * 20px) calc(var(--py, 0) * 26px); }
-html:not(.phone-mode) .chip--3 { translate: calc(var(--px, 0) * 34px) calc(var(--py, 0) * 20px); }
-html:not(.phone-mode) .chip--4 { translate: calc(var(--px, 0) * 24px) calc(var(--py, 0) * 30px); }
+html:not(.phone-mode) .hero__visual::before { content: ""; position: absolute; width: 150%; aspect-ratio: 1; left: 50%; top: 46%; transform: translate(-50%, -50%); z-index: -1; pointer-events: none; background: radial-gradient(closest-side, rgba(47, 107, 255, .3), rgba(47, 107, 255, .1) 55%, transparent 72%); filter: blur(30px); }
+html:not(.phone-mode) .win__bg { translate: calc(var(--px, 0) * -6px) calc(var(--py, 0) * -5px); }
+html:not(.phone-mode) .flip { translate: calc(var(--px, 0) * 7px) calc(var(--py, 0) * 5px); }
+html:not(.phone-mode) .orn { translate: calc(var(--px, 0) * 16px) calc(var(--py, 0) * 11px); }
+html:not(.phone-mode) .nameplate { translate: calc(var(--px, 0) * 10px) calc(var(--py, 0) * 9px); }
 html:not(.phone-mode) .hero__text { translate: calc(var(--px, 0) * -5px) calc(var(--py, 0) * -4px); }
 /* ---------- spatial cards: frosted glass that floats, lights up on hover, with a travelling neon edge ---------- */
 html:not(.phone-mode) .card { -webkit-backdrop-filter: blur(18px) saturate(1.5); backdrop-filter: blur(18px) saturate(1.5); border-color: rgba(255, 255, 255, .09);

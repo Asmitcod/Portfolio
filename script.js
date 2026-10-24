@@ -360,6 +360,11 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
 
   /* ---------- Flip photo <-> Minecraft avatar ---------- */
   {
+    const heroTime = $("#hero-time");
+    if (heroTime) {
+      const tickTime = () => { heroTime.textContent = "Chennai \u00b7 " + new Date().toLocaleTimeString("en-IN", { timeZone: "Asia/Kolkata", hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase(); };
+      tickTime(); setInterval(tickTime, 20000);
+    }
     const flip = $("#flip"), hint = $("#flip-hint");
     if (flip) {
       flip.addEventListener("click", () => {

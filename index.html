@@ -87,19 +87,23 @@
 
       <div class="hero__visual reveal">
         <div class="photo tilt">
-          <div class="photo__ring"></div>
-          <div class="photo__ring photo__ring--2"></div>
-          <button class="flip" id="flip" type="button" aria-pressed="false" aria-label="Flip photo to see my Minecraft avatar">
-            <span class="flip__inner">
-              <img src="as.png" alt="Asmit Bisht" class="flip__face flip__front" />
-              <img src="avatar.webp" alt="Minecraft avatar of Asmit" class="flip__face flip__back" loading="lazy" />
-            </span>
+          <div class="win">
+            <span class="win__bg" aria-hidden="true"></span>
+            <button class="flip" id="flip" type="button" aria-pressed="false" aria-label="Flip photo to see my Minecraft avatar">
+              <span class="flip__inner">
+                <img src="as.png" alt="Asmit Bisht" class="flip__face flip__front" />
+                <img src="avatar.webp" alt="Minecraft avatar of Asmit" class="flip__face flip__back" loading="lazy" />
+              </span>
+            </button>
             <span class="flip__hint" id="flip-hint">click me</span>
-          </button>
-          <span class="chip chip--1"><i class="fab fa-python"></i> Python</span>
-          <span class="chip chip--2"><i class="fas fa-database"></i> SQL</span>
-          <span class="chip chip--3"><i class="fas fa-brain"></i> ML</span>
-          <span class="chip chip--4"><i class="fas fa-robot"></i> ROS</span>
+          </div>
+          <ul class="orn" aria-label="Core skills">
+            <li data-label="Python" aria-label="Python" tabindex="0"><i class="fab fa-python"></i></li>
+            <li data-label="SQL" aria-label="SQL" tabindex="0"><i class="fas fa-database"></i></li>
+            <li data-label="Machine learning" aria-label="Machine learning" tabindex="0"><i class="fas fa-brain"></i></li>
+            <li data-label="ROS" aria-label="ROS" tabindex="0"><i class="fas fa-robot"></i></li>
+          </ul>
+          <span class="nameplate"><i></i><b id="hero-time">Chennai</b></span>
         </div>
       </div>
       <a href="#experience" class="scroll-hint" aria-label="Scroll down"><span></span></a>
