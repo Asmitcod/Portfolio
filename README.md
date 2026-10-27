@@ -173,3 +173,7 @@ A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls an
   <sub>© Asmit Bisht · Personal Portfolio</sub>
 </p>
 >>>>>>> 879f721f9b7ca1a70b17e1ead06078242fcbd8a8
+
+## Hero poster (desktop only)
+`hero.css` + the `.poster` markup in `index.html`: a big outlined word (`BUILD`, edit it in the `.poster__word` span) sits behind the portrait, a neon ring with a radar-style sweep frames it, and the stats float in front as glass cards at different depths (they move with the mouse, vars from `spatial.js`). The portrait is `as-hero.webp` (a smoothed 2x version of `as.png`; the phone keeps `as.png`). Click it to flip to the Minecraft avatar.
+- Size: `.poster { width: min(100%, 400px, 52vh) }`. Card positions: `.poster .stat:nth-child(n)`.
