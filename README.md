@@ -1,5 +1,5 @@
 # Asmit Bisht - Portfolio
-<<<<<<< HEAD
+
 =======
 ✦ About Me
 
@@ -111,10 +111,7 @@ GitHub: @Asmitcod
 
 LinkedIn: Connect with me
 
-Portfolio: Add your live portfolio URL here.
-
-
->>>>>>> 879f721f9b7ca1a70b17e1ead06078242fcbd8a8
+Portfolio: asmitbisht.live
 
 Static portfolio site (HTML, CSS, vanilla JS). Open `index.html`, or run `python app.py` for the optional Flask server.
 
