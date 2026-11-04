@@ -26,8 +26,8 @@
         <div class="rec-divider"></div>
         <p class="rec-card__body">
           CS engineer specialised in <strong style="color:#00e5ff">AI &amp; Robotics</strong>.
-          I turn messy real-world data into deployed systems — RL traffic controllers,
-          IoT health monitors, loan-access portals. Clean Python, solid SQL,
+          I turn messy real-world data into deployed systems — accessibility maps,
+          IoT health monitors, loan-access portals and developer tools. Clean Python, solid SQL,
           obsessed with the gap between a model and a <em style="color:#b46cff">shipped product</em>.
         </p>
         <div class="rec-card__tags" style="margin-top:.5rem">
@@ -121,12 +121,12 @@
         <h2 class="rec-card__title" data-text="Things I've built">Things I've <span>built</span></h2>
         <div class="rec-projects">
           <div class="rec-project">
-            <div class="rec-project__icon"><i class="fas fa-traffic-light"></i></div>
+            <div class="rec-project__icon"><i class="fas fa-graduation-cap"></i></div>
             <div style="flex:1">
-              <div class="rec-project__title">Smart Traffic Management System</div>
-              <div class="rec-project__desc">RL signal controller · Flask / Socket.IO live analytics</div>
+              <div class="rec-project__title">EduMadad — Student Loan Portal</div>
+              <div class="rec-project__desc">PostgreSQL · Gemini AI · education financing access</div>
             </div>
-            <span class="rec-project__pill">Personal</span>
+            <span class="rec-project__pill">Top 65</span>
           </div>
           <div class="rec-project">
             <div class="rec-project__icon"><i class="fas fa-droplet"></i></div>
@@ -137,20 +137,20 @@
             <span class="rec-project__pill">SIH '25</span>
           </div>
           <div class="rec-project">
-            <div class="rec-project__icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="rec-project__icon"><i class="fas fa-universal-access"></i></div>
             <div style="flex:1">
-              <div class="rec-project__title">EduMadad — Student Loan Portal</div>
-              <div class="rec-project__desc">PostgreSQL · Gemini AI · education financing access</div>
+              <div class="rec-project__title">AccessMap — Accessibility Map</div>
+              <div class="rec-project__desc">React / TypeScript · Spring Boot · community accessibility reports</div>
             </div>
-            <span class="rec-project__pill">Top 65</span>
+            <span class="rec-project__pill">Full-stack</span>
           </div>
           <div class="rec-project">
-            <div class="rec-project__icon"><i class="fas fa-wind"></i></div>
+            <div class="rec-project__icon"><i class="fas fa-triangle-exclamation"></i></div>
             <div style="flex:1">
-              <div class="rec-project__title">AQI Monitor</div>
-              <div class="rec-project__desc">Arduino + MQ135 · real-time Matplotlib visualisation</div>
+              <div class="rec-project__title">Failure Triage Assistant</div>
+              <div class="rec-project__desc">Next.js / TypeScript · GitHub Actions · deterministic failure classification</div>
             </div>
-            <span class="rec-project__pill">Hardware</span>
+            <span class="rec-project__pill">Dev tooling</span>
           </div>
         </div>`,
     },
@@ -173,11 +173,12 @@
           <span class="rec-skill-chip rec-skill-chip--lang">SQL</span>
           <span class="rec-skill-chip rec-skill-chip--lang">Bash</span>
           <span class="rec-skill-chip rec-skill-chip--ai">Machine Learning</span>
-          <span class="rec-skill-chip rec-skill-chip--ai">Reinforcement Learning</span>
           <span class="rec-skill-chip rec-skill-chip--ai">Agentic AI</span>
           <span class="rec-skill-chip rec-skill-chip--ai">ML Inference</span>
-          <span class="rec-skill-chip rec-skill-chip--web">Flask</span>
-          <span class="rec-skill-chip rec-skill-chip--web">Socket.IO</span>
+          <span class="rec-skill-chip rec-skill-chip--web">React</span>
+          <span class="rec-skill-chip rec-skill-chip--web">TypeScript</span>
+          <span class="rec-skill-chip rec-skill-chip--web">Spring Boot</span>
+          <span class="rec-skill-chip rec-skill-chip--web">Next.js</span>
           <span class="rec-skill-chip rec-skill-chip--web">REST APIs</span>
           <span class="rec-skill-chip rec-skill-chip--web">HTML5 / CSS3</span>
           <span class="rec-skill-chip rec-skill-chip--data">PostgreSQL</span>

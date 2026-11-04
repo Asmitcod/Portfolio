@@ -273,7 +273,7 @@
 
   /* terminal: types a few real commands */
   const typed = $("#ph-typed"), typedOut = $("#ph-typed-out");
-  const SCRIPT = [["whoami", "asmit bisht"], ["ls skills/", "python  java  c++  sql  ros"], ["ls projects/", "traffic-rl  aquajeevan  edumadad  aqi-monitor"]];
+  const SCRIPT = [["whoami", "asmit bisht"], ["ls skills/", "python  java  c++  sql  typescript  spring-boot  next.js"], ["ls projects/", "edumadad  aquajeevan  accessmap  failure-triage"]];
   const hist = [];
   (async () => {
     if (reduceMotion) { typed.textContent = SCRIPT[0][0]; typedOut.textContent = SCRIPT[0][1]; return; }
@@ -565,8 +565,8 @@
     const link = (h, t) => `<a href="${h}" target="_blank" rel="noopener">${t}</a>`;
     const cmds = {
       about: () => print("Asmit Bisht - final-year B.Tech CS (AI & Robotics) at VIT Chennai.\nI build machine learning and data-driven applications."),
-      skills: () => print("Languages : Python, Java, C, C++, SQL, Bash\nWeb       : Flask, Socket.IO, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : ML, Reinforcement Learning, Agentic AI\nRobotics  : ROS, Raspberry Pi, sensors"),
-      projects: () => print("1. Smart Traffic Management System (RL)\n2. AquaJeevan - SIH 2025, Top 100 of 864\n3. EduMadad - Devshouse 2025, Top 65\n4. AQI Monitor - Arduino + MQ135"),
+      skills: () => print("Languages : Python, Java, C, C++, SQL, Bash, TypeScript\nWeb       : React, Spring Boot, Next.js, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : ML, Agentic AI, ML Inference\nWorkflow  : GitHub Actions, QStash, Vercel\nRobotics  : ROS, Raspberry Pi, sensors"),
+      projects: () => print("1. EduMadad - Devshouse 2025, Top 65\n2. AquaJeevan - SIH 2025, Top 100 of 864\n3. AccessMap - accessibility map for Delhi\n4. Failure Triage Assistant - GitHub Actions analysis"),
       experience: () => print("Software Engineering Intern\nSankalp Sewa Sansthan (Remote)\n25 May 2025 - 20 Jun 2025"),
       education: () => print("B.Tech CS (AI & Robotics) - VIT Chennai, 2023-2027\nSenior Secondary - St. Joseph's Convent School, Kotdwara"),
       contact: () => print(`Email   : ${link("mailto:" + EMAIL, EMAIL)}\nGitHub  : ${link(GITHUB, "github.com/Asmitcod")}\nLinkedIn: ${link(LINKEDIN, "linkedin.com/in/asmit-bisht-a09682293")}`),

@@ -84,7 +84,7 @@
 
   /* ---------- Typing effect ---------- */
   const typedEl = $("#typed");
-  const words = ["machine learning systems.", "data-driven applications.", "full-stack web apps.", "IoT + AI solutions.", "smart traffic agents."];
+  const words = ["machine learning systems.", "data-driven applications.", "full-stack web apps.", "IoT + AI solutions.", "developer tools."];
   function startHero() {
     if (reduced) { typedEl.textContent = words[0]; return; }
     let w = 0, c = 0, del = false;
@@ -284,9 +284,9 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
 
   const cmds = {
     help: () => print("Available commands:\n  about       who I am\n  skills      what I work with\n  projects    things I've built\n  experience  internship\n  education   where I study\n  achievements\n  contact     how to reach me\n  resume      open my resume\n  theme       toggle dark/light\n  matrix      surprise\n  clear       clear screen\n  exit        close terminal"),
-    about: () => print("Asmit Bisht - final-year B.Tech CS (AI & Robotics) at VIT Chennai.\nI build machine learning and data-driven applications with Python, SQL and Flask."),
-    skills: () => print("Languages : Python, Java, C, C++, SQL, Bash\nWeb       : Flask, Socket.IO, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : Machine Learning, Reinforcement Learning, Agentic AI\nRobotics  : ROS, Raspberry Pi, sensor integration"),
-    projects: () => print("1. Smart Traffic Management System - RL traffic signal controller + live dashboard\n2. AquaJeevan - AI/ML + IoT water-borne disease prediction (SIH 2025, Top 100 of 864)\n3. EduMadad - student loan assistance portal (Devshouse 2025, Top 65)\n4. AQI Monitor - Arduino + MQ135 air quality visualizer"),
+    about: () => print("Asmit Bisht - final-year B.Tech CS (AI & Robotics) at VIT Chennai.\nI build machine learning and data-driven applications with Python, SQL, Java and TypeScript."),
+    skills: () => print("Languages : Python, Java, C, C++, SQL, Bash, TypeScript\nWeb       : React, Spring Boot, Next.js, REST APIs, HTML5, CSS3\nData      : PostgreSQL, AWS DynamoDB, data analysis\nAI/ML     : Machine Learning, Agentic AI, ML Inference\nWorkflow  : GitHub Actions, QStash, Vercel\nRobotics  : ROS, Raspberry Pi, sensor integration"),
+    projects: () => print("1. EduMadad - student loan assistance portal (Devshouse 2025, Top 65)\n2. AquaJeevan - AI/ML + IoT water-borne disease prediction (SIH 2025, Top 100 of 864)\n3. AccessMap - community accessibility map for Delhi\n4. Failure Triage Assistant - GitHub Actions failure analysis"),
     experience: () => print("Software Engineering Intern - Sankalp Sewa Sansthan (Remote)\n25 May 2025 - 20 Jun 2025"),
     education: () => print("B.Tech Computer Science (AI & Robotics) - VIT Chennai, 2023-2027\nSenior Secondary - St. Joseph's Convent School, Kotdwara"),
     achievements: () => print("- Smart India Hackathon 2025: Top 100 of 864 teams\n- Devshouse 2025: Top 65 nationally\n- IBM (Cognitive Class): Building AI Agents with Agentic AI"),
@@ -398,10 +398,10 @@ console.log("%cCurious how this is built? github.com/Asmitcod/Portfolio\nTry the
       { g: "Go to", icon: "fas fa-trophy", label: "Achievements", run: go("achievements"), k: "awards certificate hackathon" },
       { g: "Go to", icon: "fas fa-microscope", label: "Research", run: go("research"), k: "paper fintech" },
       { g: "Go to", icon: "fas fa-envelope", label: "Contact", run: go("contact"), k: "message hire form" },
-      { g: "Projects", icon: "fas fa-traffic-light", label: "Smart Traffic Management System", run: project("Smart Traffic"), k: "reinforcement learning rl flask" },
       { g: "Projects", icon: "fas fa-droplet", label: "AquaJeevan", run: project("AquaJeevan"), k: "sih iot water health" },
       { g: "Projects", icon: "fas fa-graduation-cap", label: "EduMadad", run: project("EduMadad"), k: "loan devshouse portal" },
-      { g: "Projects", icon: "fas fa-wind", label: "AQI Monitor", run: project("AQI"), k: "arduino air quality" },
+      { g: "Projects", icon: "fas fa-universal-access", label: "AccessMap", run: project("AccessMap"), k: "accessibility map react spring boot" },
+      { g: "Projects", icon: "fas fa-triangle-exclamation", label: "Failure Triage Assistant", run: project("Failure Triage"), k: "github actions next typescript debugging" },
       { g: "Links", icon: "fab fa-github", label: "Open GitHub profile", run: link("https://github.com/Asmitcod"), k: "code repos" },
       { g: "Links", icon: "fab fa-linkedin", label: "Open LinkedIn", run: link("https://www.linkedin.com/in/asmit-bisht-a09682293"), k: "profile connect" },
       { g: "Links", icon: "fas fa-file-lines", label: "Open resume", run: link("https://drive.google.com/file/d/1a-dny1H9XHqNxDMo3nl0PZ57saBiGXLK/view"), k: "cv download" },
