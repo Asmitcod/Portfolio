@@ -1,6 +1,5 @@
 # Asmit Bisht - Portfolio
 
-=======
 ✦ About Me
 
 I'm a final-year B.Tech student at VIT Chennai, specializing in Artificial Intelligence and Robotics.
@@ -127,7 +126,7 @@ Static portfolio site (HTML, CSS, vanilla JS). Open `index.html`, or run `python
 
 ## Mobile
 Screens up to 768px wide get a separate phone-style home screen (lock screen, app icons, dock) from `mobile.css` + `mobile.js`.
-The lock and home screens share one dark-tech 3D wallpaper (`phone-wall.js`, Three.js r128 from cdnjs, loaded on phones only): a neural core, gyro rings, an orbiting 3D microchip and floating shards. It reacts to touch, device tilt and scrolling, and falls back to a CSS grid wallpaper if WebGL is unavailable. The lock screen has a live analog clock.
+The lock and home screens share one dark-tech 3D wallpaper (`phone-lidar.js`): a neural core, gyro rings, an orbiting 3D microchip and floating shards. It reacts to touch, device tilt and scrolling, and falls back to a CSS grid wallpaper if WebGL is unavailable. The lock screen has a live analog clock.
 Desktop keeps the original layout and `script.js`. The phone version reads its content from the hidden desktop markup, so edit text in `index.html` only.
 A visitor on a phone can tap "Open desktop version" at the bottom of the home screen to see the classic layout.
 
@@ -136,12 +135,12 @@ A visitor on a phone can tap "Open desktop version" at the bottom of the home sc
 
 ## Phone version (<= 768px wide)
 
-Phones get a separate "phone OS" experience from `mobile.css`, `mobile.js` and `phone-wall.js`. The desktop site is untouched.
+Phones get a separate "phone OS" experience from `mobile.css`, `mobile.js` and `phone-lidar.js`. The desktop site is untouched.
 
 - **Lock screen:** black with the blue connected-dots network (same as desktop), one hero (a 3D neural core with an orbiting microchip), a small analog clock with a sweeping second hand, swipe up to unlock.
 - **Home screen:** a bento of live widgets over the same wallpaper: rotating projects (read from the page) with Gallery / Experience / Education / Research stacked beside it, a terminal that types real commands, a skills marquee, and Top 100 (animated ring) + newest GitHub repo (push-activity sparkline) side by side. The glass has a light sheen that follows touch or phone tilt. Tiles open full apps. The dock holds Resume, GitHub, LinkedIn and Contact.
 - **3D:** Three.js r128 from cdnjs, loaded only on phones. Reacts to touch, device tilt and scrolling. Skipped on data-saver or phones under 4 GB RAM (a CSS orb is shown instead), and when WebGL is unavailable.
-- `phone-wall.js` must be deployed next to `index.html`.
+- `phone-lidar.js` must be deployed next to `index.html`.
 
 ## Phone wallpaper: LIDAR scan (`phone-lidar.js`)
 A 2D canvas scene, no libraries (replaces the old Three.js core, so ~600 KB less to download on phones).
@@ -156,21 +155,27 @@ A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls an
 - Fonts are self-hosted in `fonts/` (latin subset, variable woff2) and declared in `fonts.css`; there is no Google Fonts request any more. Inter + Space Grotesk are preloaded on desktop only.
 - `type.css` is scoped to `html:not(.phone-mode)`, so the phone UI (Poppins + JetBrains Mono) is untouched. Retune sizes/fonts by editing the `:root` tokens.
 - Tile gradients: each card sets `--acc` (r, g, b); the tint and the pill/tag/icon colours follow it. See the "tile gradients" block in `type.css`.
-<<<<<<< HEAD
 
 ## Spatial + neon layer (desktop only)
 - `spatial.css` + `spatial.js`: ambient red/blue light, frosted-glass cards that float and light up on hover (with a travelling neon edge), floating glass nav capsule, hero layers that move with the mouse, sections that enter from depth.
 - Palette token: `--neon` (r, g, b) at the top of `spatial.css`. Change it to retune every red accent at once (try `0, 229, 255` for cyan or `180, 108, 255` for violet).
 - Everything is scoped to `html:not(.phone-mode)`; `spatial.js` is only loaded on desktop. Reduced-motion users get the static look.
 - Tile colours: one palette per section in `type.css` (Projects = neon red to violet).
-=======
 <p align="center">
   <b>Built with curiosity, engineered with purpose.</b>
   <br/>
   <sub>© Asmit Bisht · Personal Portfolio</sub>
 </p>
->>>>>>> 879f721f9b7ca1a70b17e1ead06078242fcbd8a8
 
 ## Hero poster (desktop only)
 `hero.css` + the `.poster` markup in `index.html`: a big outlined word (`BUILD`, edit it in the `.poster__word` span) sits behind the portrait, a neon ring with a radar-style sweep frames it, and the stats float in front as glass cards at different depths (they move with the mouse, vars from `spatial.js`). The portrait is `as-hero.webp` (a smoothed 2x version of `as.png`; the phone keeps `as.png`). Click it to flip to the Minecraft avatar.
 - Size: `.poster { width: min(100%, 400px, 52vh) }`. Card positions: `.poster .stat:nth-child(n)`.
+
+## Music player ("On Repeat", desktop only)
+
+`music.css` + `music.js` add a tile at the bottom of the Beyond Code section: a record that slides out of its sleeve, a tonearm that drops onto it, a cover-tinted glow, a mirrored equalizer, a waveform seek bar and a track list.
+
+- Edit the songs in the `T` array at the top of `music.js`. Each track takes `audio` (a file in `music/`) or `youtube` (a link or video ID). All five tracks are wired to local MP3s in `music/`.
+- Put covers in `music/` (square, about 600x600) with the names in the array. The glow colour is taken from each cover once it loads.
+- With no audio source the tile runs in demo mode and says so. Blocked YouTube embeds show an "open on YouTube" link.
+- Colours follow `--neon` (the per-song glow uses `--mp`, set by the script) in `spatial.css`. The tile is hidden under `.phone-mode`.

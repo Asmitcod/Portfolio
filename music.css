@@ -1,0 +1,54 @@
+/* On Repeat: music tile for Beyond Code (desktop only). Colours derive from --neon; --mp is the current cover colour (r, g, b). */
+html.phone-mode .beyond-music { display: none; }
+html:not(.phone-mode) .beyond-music { --mp: var(--neon); margin-top: 1.5rem; padding: 0; isolation: isolate; }
+.mp { display: grid; grid-template-columns: 470px minmax(0, 1fr); gap: clamp(1.4rem, 3vw, 2.6rem); padding: clamp(1.35rem, 3vw, 2.4rem); align-items: center; position: relative; }
+.mp__amb { position: absolute; inset: -25%; z-index: -1; background-size: cover; background-position: center; filter: blur(70px) saturate(1.5); opacity: .3; transition: background-image .6s; pointer-events: none; }
+.mp__stage { position: relative; width: 470px; height: 340px; }
+.mp__sleeve, .mp__disc { position: absolute; top: 44px; width: 250px; height: 250px; background-size: cover; background-position: center; }
+.mp__sleeve { left: 0; z-index: 3; border-radius: 6px; box-shadow: 0 24px 50px -12px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.1), 0 0 60px -10px rgba(var(--mp), .55); transform: rotate(-2deg); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+.mp__sleeve::after { content: ""; position: absolute; inset: 0; border-radius: 6px; background: linear-gradient(115deg, rgba(255,255,255,.22), transparent 38%, transparent 70%, rgba(0,0,0,.28)); }
+.mp__disc { left: 0; z-index: 2; border-radius: 50%; transition: transform .9s cubic-bezier(.2,.8,.2,1); filter: drop-shadow(0 18px 24px rgba(0,0,0,.6)); }
+.mp__vinyl { position: absolute; inset: 0; border-radius: 50%; animation: mpSpin 3.2s linear infinite paused;
+  background: repeating-radial-gradient(circle, #0b0b0f 0 1.5px, #1b1b22 1.5px 3px, #0b0b0f 3px 4px), #0b0b0f; box-shadow: inset 0 0 0 5px #111, 0 0 0 1px rgba(255,255,255,.08); }
+.mp__label { position: absolute; inset: 31%; border-radius: 50%; background-size: cover; background-position: center; box-shadow: 0 0 0 3px #08080b, 0 0 20px rgba(var(--mp), .5); }
+.mp__label::after { content: ""; position: absolute; inset: 44%; border-radius: 50%; background: #0a0a0d; box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+.mp__sheen { position: absolute; inset: 0; border-radius: 50%; pointer-events: none; background: conic-gradient(from 25deg, transparent 0 8%, rgba(255,255,255,.2) 14%, transparent 22% 55%, rgba(255,255,255,.14) 64%, transparent 72%); }
+.mp__arm { position: absolute; left: 376px; top: 24px; width: 10px; height: 214px; z-index: 5; transform-origin: 5px 5px; transform: rotate(-30deg); transition: transform 1s cubic-bezier(.3,.8,.2,1); }
+.mp__arm::before { content: ""; position: absolute; left: 2px; top: 6px; width: 6px; height: 196px; border-radius: 4px; background: linear-gradient(90deg, #cfd3dc, #7d8290); box-shadow: 0 8px 14px rgba(0,0,0,.5); }
+.mp__arm::after { content: ""; position: absolute; left: -2px; bottom: 0; width: 14px; height: 24px; border-radius: 3px 3px 5px 5px; background: #23232a; border-bottom: 3px solid rgb(var(--mp)); box-shadow: 0 6px 12px rgba(var(--mp), .5); }
+.mp__pivot { position: absolute; left: -12px; top: -12px; width: 34px; height: 34px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #3b3b44, #121217); box-shadow: 0 0 0 2px rgba(var(--mp), .7), 0 0 18px rgba(var(--mp), .5); }
+.is-playing .mp__disc { transform: translateX(150px); }
+.is-playing .mp__sleeve { transform: rotate(-5deg) translateX(-14px); }
+.is-playing .mp__vinyl { animation-play-state: running; }
+.is-playing .mp__arm { transform: rotate(6.5deg); }
+@keyframes mpSpin { to { transform: rotate(360deg); } }
+
+.mp__info { min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.mp__eyebrow { display: inline-flex; align-items: center; gap: .5rem; color: var(--secondary); font: 500 .65rem "JetBrains Mono", monospace; letter-spacing: .1em; }
+.mp__eyebrow i { width: 7px; height: 7px; border-radius: 50%; background: rgb(var(--mp)); box-shadow: 0 0 10px rgb(var(--mp)); }
+.is-playing .mp__eyebrow i { animation: livePulse 1.4s infinite; }
+.mp__title { font: 700 clamp(1.7rem, 3.2vw, 2.6rem)/1.05 "Space Grotesk", sans-serif; color: var(--fg-strong); letter-spacing: -.03em; margin: .3rem 0 0; }
+.mp__artist { color: var(--fg-strong); font-size: 1.02rem; }
+.mp__meta { color: var(--fg); font: 400 .75rem "JetBrains Mono", monospace; opacity: .8; }
+.mp__eq { display: flex; align-items: center; gap: 3px; height: 56px; margin: 1rem 0 .4rem; }
+.mp__eq i { flex: 1; height: 100%; border-radius: 3px; transform: scaleY(.06); background: linear-gradient(to top, rgba(var(--mp), .35), rgb(var(--mp))); box-shadow: 0 0 10px rgba(var(--mp), .55); }
+.mp__wave { display: flex; align-items: center; gap: 2px; height: 30px; cursor: pointer; }
+.mp__wave span { flex: 1; border-radius: 2px; background: rgba(255,255,255,.16); transition: background .2s; }
+.mp__wave span.on { background: rgb(var(--mp)); box-shadow: 0 0 8px rgba(var(--mp), .6); }
+.mp__time { display: flex; justify-content: space-between; font: .68rem "JetBrains Mono", monospace; color: var(--fg); opacity: .75; }
+.mp__ctl { display: flex; align-items: center; gap: .9rem; margin-top: .5rem; }
+.mp__ctl button { all: unset; box-sizing: border-box; cursor: pointer; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; color: #fff; border: 1px solid rgba(255,255,255,.2); background: rgba(255,255,255,.05); transition: transform .2s, box-shadow .3s, border-color .3s; }
+.mp__ctl button:hover { border-color: rgb(var(--mp)); box-shadow: 0 0 18px rgba(var(--mp), .55); transform: scale(1.06); }
+.mp__ctl button:focus-visible, .mp__list li:focus-visible, .mp__wave:focus-visible { outline: 2px solid rgb(var(--mp)); outline-offset: 3px; }
+.mp__ctl .mp__play { width: 58px; height: 58px; font-size: 1.1rem; background: rgb(var(--mp)); border-color: transparent; box-shadow: 0 0 28px rgba(var(--mp), .6); }
+.mp__status { margin-left: auto; font: .68rem "JetBrains Mono", monospace; color: var(--fg); opacity: .8; text-align: right; }
+.mp__status a { color: rgb(var(--mp)); text-decoration: underline; text-underline-offset: 3px; }
+.mp__list { grid-column: 1 / -1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .7rem; }
+.mp__list li { display: flex; align-items: center; gap: .7rem; padding: .55rem; border-radius: 12px; cursor: pointer; border: 1px solid var(--border); background: rgba(255,255,255,.03); transition: border-color .3s, background .3s, transform .3s; min-width: 0; }
+.mp__list li:hover { transform: translateY(-2px); border-color: rgba(var(--neon), .5); }
+.mp__list li.on { border-color: rgba(var(--mp), .8); background: rgba(var(--mp), .12); box-shadow: 0 0 22px -6px rgba(var(--mp), .6); }
+.mp__thumb { width: 40px; height: 40px; border-radius: 8px; flex: none; background-size: cover; background-position: center; }
+.mp__list b { display: block; font: 600 .8rem "Inter", sans-serif; color: var(--fg-strong); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mp__list span { display: block; font-size: .7rem; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 1050px) { .mp { grid-template-columns: 1fr; justify-items: center; } .mp__info { width: 100%; } .mp__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .mp__vinyl, .is-playing .mp__eyebrow i { animation: none; } }
