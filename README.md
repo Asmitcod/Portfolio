@@ -179,3 +179,9 @@ A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls an
 - Put covers in `music/` (square, about 600x600) with the names in the array. The glow colour is taken from each cover once it loads.
 - With no audio source the tile runs in demo mode and says so. Blocked YouTube embeds show an "open on YouTube" link.
 - Colours follow `--neon` (the per-song glow uses `--mp`, set by the script) in `spatial.css`. The tile is hidden under `.phone-mode`.
+
+- <p align="center">
+  <b>Built with curiosity, engineered with purpose.</b>
+  <br/>
+  <sub>© Asmit Bisht · Personal Portfolio</sub>
+</p>
