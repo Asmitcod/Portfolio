@@ -2,7 +2,7 @@
 
 ✦ About Me
 
-I'm a final-year B.Tech student at VIT Chennai, specializing in Artificial Intelligence and Robotics.
+Hi, I'm a final-year B.Tech student at VIT Chennai, specializing in Artificial Intelligence and Robotics.
 
 I enjoy exploring the intersection of software engineering, intelligent systems, automation, and interactive experiences. My goal is to build technology that is not only functional but also intuitive, engaging, and impactful.
 
