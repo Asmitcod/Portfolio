@@ -10,7 +10,7 @@ Focus: Artificial Intelligence, Robotics, and Software Engineering
 
 Core Languages: Python, Java, C, and C++
 
-Interests: Intelligent systems, automation, and immersive web experiences
+Interests: Intelligent systems, automation, backend services and immersive web experiences
 
 Currently Exploring: Agentic AI, AI-powered applications, and robotics
 
