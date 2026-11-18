@@ -44,6 +44,8 @@ Git & GitHub — Version control and project hosting
 
 Additional libraries and tools may be used for specific visual effects or interactions.
 
+Konami codes applicable 
+
 ✦ Featured Projects
 
 My portfolio serves as a central hub for projects across AI, software development, and robotics.
