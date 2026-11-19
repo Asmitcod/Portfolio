@@ -1,189 +1,119 @@
-# Asmit Bisht - Portfolio
+<div align="center">
 
-✦ About Me
+# Asmit Bisht
 
-Hi, I'm a final-year B.Tech student at VIT Chennai, specializing in Artificial Intelligence and Robotics.
+### AI · Robotics · Software Engineering
 
-I enjoy exploring the intersection of software engineering, intelligent systems, automation, and interactive experiences. My goal is to build technology that is not only functional but also intuitive, engaging, and impactful.
+An interactive portfolio exploring the space between intelligent systems and thoughtful digital experiences.
 
-Focus: Artificial Intelligence, Robotics, and Software Engineering
+[**Explore the portfolio ↗**](https://asmitbisht.live) &nbsp;·&nbsp;
+[GitHub](https://github.com/Asmitcod) &nbsp;·&nbsp;
+[LinkedIn](https://www.linkedin.com/in/asmit-bisht-a09682293)
 
-Core Languages: Python, Java, C, and C++
+<br>
 
-Interests: Intelligent systems, automation, backend services and immersive web experiences
+![HTML5](https://img.shields.io/badge/HTML5-markup-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-design-1572B6?style=flat-square&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-interactions-F7DF1E?style=flat-square&logo=javascript&logoColor=111111)
+![Responsive](https://img.shields.io/badge/Responsive-desktop%20%2B%20mobile-8A63D2?style=flat-square)
 
-Currently Exploring: Agentic AI, AI-powered applications, and robotics
+</div>
 
-✦ Portfolio Experience
+<br>
 
-The portfolio is designed as a digital environment rather than a conventional static webpage.
+> **Built with curiosity, engineered with purpose.**
 
-Immersive Visual Design — A dark, modern interface with a distinctive visual identity.
+## ✦ About
 
-Interactive Experiences — Thoughtful interactions and animations designed to make navigation engaging.
+I'm a final-year B.Tech student at VIT Chennai, specializing in **Artificial Intelligence and Robotics**. I enjoy bringing together software engineering, intelligent systems, automation, and interaction design to build experiences that feel as considered as they are useful.
 
-3D-Inspired Aesthetics — Visual elements inspired by robotics, spatial computing, and digital environments.
+| Focus | Toolkit | Currently exploring |
+|:--|:--|:--|
+| AI, robotics, and software engineering | Python, Java, C, and C++ | Agentic AI, AI-powered applications, and robotics |
 
-Project Showcase — A dedicated space for exploring my technical projects and experiments.
+## ⌘ Inside the portfolio
 
-Responsive Layout — Designed to provide a usable experience across desktop and mobile screens.
+- **A custom digital environment** — a dark, spatial interface with layered motion, frosted glass, and neon accents.
+- **A phone-sized experience** — a dedicated mobile home screen, live widgets, and an animated LIDAR-inspired wallpaper.
+- **Small surprises** — a command palette (`Ctrl` / `⌘` + `K`), an interactive terminal (backtick), and a Konami-code easter egg.
+- **Projects with context** — selected work alongside a live feed of recent GitHub activity.
+- **A little personality** — a flip-to-reveal portrait, desktop music player, and a custom 404 page.
 
-Personal Branding — A unified presentation of my skills, projects, and engineering interests.
+## ◈ Selected projects
 
-✦ Tech Stack
+| Project | What it does |
+|:--|:--|
+| **EduMadad** | Student-loan assistance portal helping students discover higher-education financing options. Ranked in the top 65 nationally at the GDG VIT Chennai hackathon. |
+| **AquaJeevan** | AI/ML and IoT water-surveillance concept for predicting and preventing water-borne diseases. Ranked in the top 100 of 864 teams at Smart India Hackathon 2025. |
+| **AccessMap** | Community-powered accessibility map for finding and sharing information about entrances, lifts, ramps, and restrooms. |
+| **Failure Triage Assistant** | GitHub Actions companion that sanitizes workflow evidence, classifies common failures, and offers actionable debugging guidance. |
 
-The technologies used in this project include:
+## ⚙️ Built with
 
-HTML5 — Page structure and semantic markup
+- **Structure:** HTML5
+- **Visuals:** CSS3, custom animations, and responsive layouts
+- **Interactions:** Vanilla JavaScript
+- **Typography:** Self-hosted Space Grotesk, Inter, JetBrains Mono, and Poppins fonts
+- **Optional local server:** Python and Flask
 
-CSS3 — Styling, layouts, animations, and responsive design
+## 🚀 Run it locally
 
-JavaScript — Interactive behavior and dynamic experiences
+Clone the repository:
 
-Git & GitHub — Version control and project hosting
-
-Additional libraries and tools may be used for specific visual effects or interactions.
-
-Konami codes applicable 
-
-✦ Featured Projects
-
-My portfolio serves as a central hub for projects across AI, software development, and robotics.
-
-Some of the projects I have explored include:
-
-Project
-
-Description
-
-EduMadad
-
-An AI-powered student loan assistance platform designed to help students access educational financing resources.
-
-Aqua Report Buddy
-
-A water-quality reporting project combining a web application with IoT-based sensor data ingestion.
-
-Predictive Legal Analytics
-
-An exploration of NLP and LegalBERT for predicting legal case outcomes.
-
-Smart Hostel Management System
-
-A software engineering project focused on hostel administration and management workflows.
-
-✦ Run Locally
-
-Want to explore the project on your own machine?
-
-1. Clone the repository
-
+```bash
 git clone https://github.com/Asmitcod/Portfolio.git
-
-2. Navigate into the project
-
 cd Portfolio
+```
 
-3. Launch the portfolio
+Open `index.html` in a browser, or use the Live Server extension in VS Code. To run the optional Flask server, install its dependencies and start the app:
 
-If the project uses plain HTML, CSS, and JavaScript, open index.html in your browser or use the Live Server extension in VS Code.
+```bash
+python -m pip install Flask Flask-Cors
+python app.py
+```
 
-If the project uses a build tool or additional dependencies, follow the setup instructions in its package.json.
+Then visit `http://localhost:5000`.
 
-✦ Project Goals
+## 🌐 Deploy
 
-This project is an ongoing experiment in combining engineering and design.
+The portfolio is a static site and can be published with GitHub Pages from the `main` branch. The `CNAME` file contains the custom-domain configuration. The contact form submits to Formspree; its endpoint is configured in `index.html`.
 
-My goals are to:
+## 🧭 A few implementation notes
 
-Create a distinctive and memorable portfolio experience.
+### Desktop
 
-Present technical projects with clarity and personality.
+The desktop experience is styled with `styles.css`, `type.css`, `hero.css`, and `spatial.css`, with interactions powered by `script.js` and `spatial.js`. The visual system uses a shared type scale, section-specific tile accents, layered hero artwork, and motion that respects reduced-motion preferences.
 
-Experiment with advanced web interactions and immersive visual design.
+### Phone experience
 
-Continuously improve accessibility, responsiveness, and performance.
+At widths up to 768px, `mobile.css` and `mobile.js` present a dedicated phone-style interface while reusing the page's content. `phone-lidar.js` draws the animated scan wallpaper on canvas; a connected-dots network adds a second layer. The scan reduces its workload when data saver is enabled or the device reports less than 4 GB of memory.
 
-✦ Connect With Me
+### Tune the details
 
-I'm always interested in connecting with people working on AI, robotics, software engineering, and innovative technology.
+| Want to change… | Start here |
+|:--|:--|
+| Phone LIDAR floor plan, scan speed, or density | `phone-lidar.js` |
+| Connected-dots spacing and animation | `mobile.js` |
+| Desktop type scale and tile colors | `type.css` |
+| Desktop neon accent | `spatial.css` (`--neon`) |
+| Hero poster and stat-card positions | `hero.css` |
+| “On Repeat” tracks and artwork | `music.js` and the `music/` folder |
 
-GitHub: @Asmitcod
+## 📬 Connect
 
-LinkedIn: Connect with me
+Interested in AI, robotics, software engineering, or building something together? Find me here:
 
-Portfolio: asmitbisht.live
+- **Portfolio:** [asmitbisht.live](https://asmitbisht.live)
+- **GitHub:** [@Asmitcod](https://github.com/Asmitcod)
+- **LinkedIn:** [Asmit Bisht](https://www.linkedin.com/in/asmit-bisht-a09682293)
+- **Contact form:** powered by [Formspree](https://formspree.io/)
 
-Static portfolio site (HTML, CSS, vanilla JS). Open `index.html`, or run `python app.py` for the optional Flask server.
+<div align="center">
 
-- Add your resume as `resume.pdf` in this folder (the Resume button links to it).
-- Contact form posts to Formspree (`https://formspree.io/f/mkgrjqqv`).
-- Deploy on GitHub Pages: push the folder and enable Pages on the main branch.
+<br>
 
-## Features
-- Flip the hero photo to reveal the Minecraft avatar (`avatar.png`)
-- Ctrl/Cmd + K command palette, backtick terminal, Konami code easter egg
-- "Latest from GitHub" repo cards (auto-updated via GitHub API)
-- Custom 404 page with a wandering RL agent (home link is `/` because of the custom domain)
+*Thanks for stopping by — keep building things that make people curious.*
 
-## Mobile
-Screens up to 768px wide get a separate phone-style home screen (lock screen, app icons, dock) from `mobile.css` + `mobile.js`.
-The lock and home screens share one dark-tech 3D wallpaper (`phone-lidar.js`): a neural core, gyro rings, an orbiting 3D microchip and floating shards. It reacts to touch, device tilt and scrolling, and falls back to a CSS grid wallpaper if WebGL is unavailable. The lock screen has a live analog clock.
-Desktop keeps the original layout and `script.js`. The phone version reads its content from the hidden desktop markup, so edit text in `index.html` only.
-A visitor on a phone can tap "Open desktop version" at the bottom of the home screen to see the classic layout.
+<sub>© Asmit Bisht · Personal Portfolio</sub>
 
-## Phone wallpaper
-- Connected-dots network (2D canvas, `initNet` block in `mobile.js`): tune `LINK` (line distance) and the node count formula.
-
-## Phone version (<= 768px wide)
-
-Phones get a separate "phone OS" experience from `mobile.css`, `mobile.js` and `phone-lidar.js`. The desktop site is untouched.
-
-- **Lock screen:** black with the blue connected-dots network (same as desktop), one hero (a 3D neural core with an orbiting microchip), a small analog clock with a sweeping second hand, swipe up to unlock.
-- **Home screen:** a bento of live widgets over the same wallpaper: rotating projects (read from the page) with Gallery / Experience / Education / Research stacked beside it, a terminal that types real commands, a skills marquee, and Top 100 (animated ring) + newest GitHub repo (push-activity sparkline) side by side. The glass has a light sheen that follows touch or phone tilt. Tiles open full apps. The dock holds Resume, GitHub, LinkedIn and Contact.
-- **3D:** Three.js r128 from cdnjs, loaded only on phones. Reacts to touch, device tilt and scrolling. Skipped on data-saver or phones under 4 GB RAM (a CSS orb is shown instead), and when WebGL is unavailable.
-- `phone-lidar.js` must be deployed next to `index.html`.
-
-## Phone wallpaper: LIDAR scan (`phone-lidar.js`)
-A 2D canvas scene, no libraries (replaces the old Three.js core, so ~600 KB less to download on phones).
-A robot patrols a warehouse floor plan; two spinning beams ray-cast the walls and every return becomes a point that flashes, settles and fades.
-- Floor plan: `WALLS`, `RECTS`, `CIRCLES`, `ROUTE` at the top of the file (coordinates are 0..1, stretched to fit).
-- Speed / density: `OMEGA` (beam speed), `DA` (angle between rays), `LIFE` (seconds a point stays), `N` (max points).
-- Low-power phones (Data Saver, or under 4 GB RAM) get fewer rays/points and a lower frame rate.
-- Tap anywhere in the scan area for a sonar ping; unlocking sends a pulse from the robot.
-
-## Typography (desktop)
-- Three voices: **Space Grotesk** (headings), **Inter** (text), **JetBrains Mono** (labels, tags, pills, dates). One size scale in `type.css` (`--t-xs` ... `--t-hero`).
-- Fonts are self-hosted in `fonts/` (latin subset, variable woff2) and declared in `fonts.css`; there is no Google Fonts request any more. Inter + Space Grotesk are preloaded on desktop only.
-- `type.css` is scoped to `html:not(.phone-mode)`, so the phone UI (Poppins + JetBrains Mono) is untouched. Retune sizes/fonts by editing the `:root` tokens.
-- Tile gradients: each card sets `--acc` (r, g, b); the tint and the pill/tag/icon colours follow it. See the "tile gradients" block in `type.css`.
-
-## Spatial + neon layer (desktop only)
-- `spatial.css` + `spatial.js`: ambient red/blue light, frosted-glass cards that float and light up on hover (with a travelling neon edge), floating glass nav capsule, hero layers that move with the mouse, sections that enter from depth.
-- Palette token: `--neon` (r, g, b) at the top of `spatial.css`. Change it to retune every red accent at once (try `0, 229, 255` for cyan or `180, 108, 255` for violet).
-- Everything is scoped to `html:not(.phone-mode)`; `spatial.js` is only loaded on desktop. Reduced-motion users get the static look.
-- Tile colours: one palette per section in `type.css` (Projects = neon red to violet).
-<p align="center">
-  <b>Built with curiosity, engineered with purpose.</b>
-  <br/>
-  <sub>© Asmit Bisht · Personal Portfolio</sub>
-</p>
-
-## Hero poster (desktop only)
-`hero.css` + the `.poster` markup in `index.html`: a big outlined word (`BUILD`, edit it in the `.poster__word` span) sits behind the portrait, a neon ring with a radar-style sweep frames it, and the stats float in front as glass cards at different depths (they move with the mouse, vars from `spatial.js`). The portrait is `as-hero.webp` (a smoothed 2x version of `as.png`; the phone keeps `as.png`). Click it to flip to the Minecraft avatar.
-- Size: `.poster { width: min(100%, 400px, 52vh) }`. Card positions: `.poster .stat:nth-child(n)`.
-
-## Music player ("On Repeat", desktop only)
-
-`music.css` + `music.js` add a tile at the bottom of the Beyond Code section: a record that slides out of its sleeve, a tonearm that drops onto it, a cover-tinted glow, a mirrored equalizer, a waveform seek bar and a track list.
-
-- Edit the songs in the `T` array at the top of `music.js`. Each track takes `audio` (a file in `music/`) or `youtube` (a link or video ID). All five tracks are wired to local MP3s in `music/`.
-- Put covers in `music/` (square, about 600x600) with the names in the array. The glow colour is taken from each cover once it loads.
-- With no audio source the tile runs in demo mode and says so. Blocked YouTube embeds show an "open on YouTube" link.
-- Colours follow `--neon` (the per-song glow uses `--mp`, set by the script) in `spatial.css`. The tile is hidden under `.phone-mode`.
-
-  <p align="center">
-  <b>Built with curiosity, engineered with purpose.</b>
-  <br/>
-  <sub>© Asmit Bisht · Personal Portfolio</sub>
-</p>
+</div>
